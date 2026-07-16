@@ -1,11 +1,8 @@
-# Chanel & Armani – Startfehler behoben
+# Chanel & Armani – Pac-Steuerung wie im Hauptspiel
 
-Korrekturen:
-- Unterstützung für ältere Safari-, WKWebView- und a-Shell-Versionen.
-- `roundRect`-Polyfill, damit die gezeichneten Hunde und Knöpfe den Start nicht blockieren.
-- Audiofehler verhindern den Start nicht mehr.
-- LocalStorage-Fehler verhindern den Start nicht mehr.
-- Startmenü wird ausdrücklich sichtbar gesetzt.
-- Laufzeitfehler werden auf dem Bildschirm angezeigt.
-
-Nach dem Hochladen auf GitHub Pages die Seite mit `?v=3` öffnen, damit Safari nicht die alte Datei aus dem Cache lädt.
+Pac-Bonuslevel:
+- Links unten: links / rechts
+- Rechts unten: runter / hoch
+- Die normalen Spielknöpfe werden während des Pac-Bonuslevels automatisch umbeschriftet.
+- Nach dem Bonuslevel werden Schießen und Springen wiederhergestellt.
+- Tastatur: A/D oder Pfeiltasten links/rechts, W/Pfeil hoch, S/F/Pfeil runter.

@@ -108,10 +108,10 @@ window.addEventListener('error',function(e){
 
 <div id="pacScreen" class="screen" style="display:none;background:#050816"><div class="card" style="background:#0b1022;color:white;width:min(96vw,940px)">
 <h1 style="text-shadow:none;font-size:38px">BONUSLEVEL – KNOCHEN-LABYRINTH</h1>
-<p>Sammle alle Punkte und weiche den Katzen aus.</p>
+<p>Sammle alle Punkte und weiche den Katzen aus. Steuerung wie im Hauptspiel: links unten links/rechts, rechts unten hoch/runter.</p>
 <canvas id="pacCanvas" width="900" height="500" style="position:static;width:min(94vw,900px);height:auto;background:#050816;border:4px solid #1d4ed8;border-radius:14px;touch-action:none"></canvas>
 <div style="font-size:20px;margin:8px">Punkte: <span id="pacPoints">0</span> / <span id="pacTotal">0</span></div>
-<div id="pacControls">
+<div id="pacControls" style="display:none">
 <button id="pacUp" aria-label="Nach oben">⬆</button>
 <button id="pacLeft" aria-label="Nach links">⬅</button>
 <button id="pacDown" aria-label="Nach unten">⬇</button>
@@ -306,7 +306,31 @@ document.querySelectorAll('[data-preview]').forEach(cv=>{let q=cv.getContext('2d
 
 document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{audioInit();startTitleMusic();mode=b.dataset.mode;menu.style.display='none';selectScreen.style.display='flex';p2sel.style.display=mode==='split'?'block':'none'});
 document.querySelectorAll('.char').forEach(b=>b.onclick=()=>{let p=b.dataset.p;sel[p]=b.dataset.c;document.querySelectorAll('.char[data-p="'+p+'"]').forEach(z=>z.classList.remove('selected'));b.classList.add('selected')});
-document.querySelectorAll('[data-k]').forEach(b=>{let k=b.dataset.k,d=e=>{e.preventDefault();keys[k]=1;b.classList.add('active')},u=e=>{e.preventDefault();keys[k]=0;b.classList.remove('active')};b.addEventListener('pointerdown',d);b.addEventListener('pointerup',u);b.addEventListener('pointercancel',u);b.addEventListener('pointerleave',u)});
+document.querySelectorAll('[data-k]').forEach(b=>{
+  let k=b.dataset.k;
+  const pacMap={l1:[-1,0],r1:[1,0],f1:[0,1],j1:[0,-1]};
+  const down=e=>{
+    e.preventDefault();
+    b.classList.add('active');
+    if(pacScreen&&pacScreen.style.display==='flex'&&pacMap[k]){
+      setPacDirection(pacMap[k][0],pacMap[k][1]);
+      return;
+    }
+    keys[k]=1;
+  };
+  const up=e=>{
+    e.preventDefault();
+    b.classList.remove('active');
+    if(pacScreen&&pacScreen.style.display==='flex'&&pacMap[k])return;
+    keys[k]=0;
+  };
+  b.addEventListener('pointerdown',down,{passive:false});
+  b.addEventListener('pointerup',up,{passive:false});
+  b.addEventListener('pointercancel',up,{passive:false});
+  b.addEventListener('pointerleave',up,{passive:false});
+  b.addEventListener('touchstart',down,{passive:false});
+  b.addEventListener('touchend',up,{passive:false});
+});
 addEventListener('keydown',e=>{if(pacScreen&&pacScreen.style.display==='flex')return;let m={a:'l1',d:'r1',w:'j1',f:'f1',ArrowLeft:'l2',ArrowRight:'r2',ArrowUp:'j2',Enter:'f2'};if(m[e.key]){keys[m[e.key]]=1;e.preventDefault()}});
 addEventListener('keyup',e=>{if(pacScreen&&pacScreen.style.display==='flex')return;let m={a:'l1',d:'r1',w:'j1',f:'f1',ArrowLeft:'l2',ArrowRight:'r2',ArrowUp:'j2',Enter:'f2'};if(m[e.key]){keys[m[e.key]]=0;e.preventDefault()}});
 document.addEventListener('touchmove',e=>e.preventDefault(),{passive:false});
@@ -372,9 +396,33 @@ function pacStep(){
   if(pacMap[pacPlayer.y][pacPlayer.x]==='.'){pacMap[pacPlayer.y][pacPlayer.x]=' ';pacCollected++;scorePoints+=2;pacPointsEl.textContent=pacCollected;sfx('bone')}
   for(const e of pacEnemies){let opts=[[1,0],[-1,0],[0,1],[0,-1]].filter(d=>pacCanMove(e.x+d[0],e.y+d[1]));opts.sort(()=>Math.random()-.5);const best=opts[0];if(best){e.x+=best[0];e.y+=best[1]}if(e.x===pacPlayer.x&&e.y===pacPlayer.y){pacPlayer={x:1,y:1,dirX:0,dirY:0};sfx('hit')}}
   drawPac();
-  if(pacCollected>=pacDots){clearInterval(pacTimer);pacTimer=null;pacDone=true;scorePoints+=100;sfx('win');setTimeout(()=>{pacScreen.style.display='none';hud.style.display='flex';leftPad.style.display='flex';rightPad.style.display='flex';p2LeftPad.style.display=mode==='split'?'flex':'none';p2RightPad.style.display=mode==='split'?'flex':'none';setup(2);run=true;last=performance.now()},700)}
+  if(pacCollected>=pacDots){clearInterval(pacTimer);pacTimer=null;pacDone=true;scorePoints+=100;sfx('win');setTimeout(()=>{pacScreen.style.display='none';restoreMainControls();hud.style.display='flex';leftPad.style.display='flex';rightPad.style.display='flex';p2LeftPad.style.display=mode==='split'?'flex':'none';p2RightPad.style.display=mode==='split'?'flex':'none';setup(2);run=true;last=performance.now()},700)}
 }
-function startPacBonus(){run=false;hud.style.display='none';leftPad.style.display='none';rightPad.style.display='none';p2LeftPad.style.display='none';p2RightPad.style.display='none';pacScreen.style.display='flex';makePacLevel();if(pacTimer)clearInterval(pacTimer);pacTimer=setInterval(pacStep,170)}
+
+function setMainControlsForPac(){
+  leftPad.style.display='flex';
+  rightPad.style.display='flex';
+  p2LeftPad.style.display='none';
+  p2RightPad.style.display='none';
+
+  const leftButtons=leftPad.querySelectorAll('button');
+  const rightButtons=rightPad.querySelectorAll('button');
+
+  if(leftButtons[0]){leftButtons[0].textContent='◀';leftButtons[0].setAttribute('aria-label','Pac nach links')}
+  if(leftButtons[1]){leftButtons[1].textContent='▶';leftButtons[1].setAttribute('aria-label','Pac nach rechts')}
+  if(rightButtons[0]){rightButtons[0].textContent='▼';rightButtons[0].setAttribute('aria-label','Pac nach unten')}
+  if(rightButtons[1]){rightButtons[1].textContent='▲';rightButtons[1].setAttribute('aria-label','Pac nach oben')}
+}
+function restoreMainControls(){
+  const leftButtons=leftPad.querySelectorAll('button');
+  const rightButtons=rightPad.querySelectorAll('button');
+
+  if(leftButtons[0]){leftButtons[0].textContent='◀';leftButtons[0].setAttribute('aria-label','Links')}
+  if(leftButtons[1]){leftButtons[1].textContent='▶';leftButtons[1].setAttribute('aria-label','Rechts')}
+  if(rightButtons[0]){rightButtons[0].textContent='🦴';rightButtons[0].setAttribute('aria-label','Schießen')}
+  if(rightButtons[1]){rightButtons[1].textContent='⬆';rightButtons[1].setAttribute('aria-label','Springen')}
+}
+function startPacBonus(){run=false;hud.style.display='none';setMainControlsForPac();pacScreen.style.display='flex';makePacLevel();if(pacTimer)clearInterval(pacTimer);pacTimer=setInterval(pacStep,170)}
 
 let lastPacInput=0;
 function setPacDirection(dx,dy){
@@ -396,7 +444,7 @@ bindPacButton(pacRight,1,0);
 
 window.addEventListener('keydown',e=>{
   if(pacScreen.style.display!=='flex')return;
-  const dirs={ArrowUp:[0,-1],w:[0,-1],ArrowDown:[0,1],s:[0,1],ArrowLeft:[-1,0],a:[-1,0],ArrowRight:[1,0],d:[1,0]};
+  const dirs={ArrowUp:[0,-1],w:[0,-1],ArrowDown:[0,1],s:[0,1],f:[0,1],ArrowLeft:[-1,0],a:[-1,0],ArrowRight:[1,0],d:[1,0]};
   const d=dirs[e.key];
   if(d){e.preventDefault();e.stopImmediatePropagation();setPacDirection(d[0],d[1])}
 },true);
