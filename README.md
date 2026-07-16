@@ -1,15 +1,9 @@
-# Chanel & Armani – Level 3 & Figuren-Update
+# Chanel & Armani – Herzen, Power-up und Feuerwerk
 
-Geändert:
-- In Level 3 fliegen deutlich weniger Projektile.
-- Die Projektile in Level 3 sind langsamer.
-- Der Boss schießt mit längeren Pausen.
-- Chanel und Armani wirken lebendiger:
-  - bewegliche Ohren
-  - wedelnder Schwanz
-  - Atmung im Stand
-  - Kopfbewegung beim Laufen
-  - ausdrucksstärkere Augen
-  - animierte Zunge
-  - Pfotenbewegung und Staub beim Laufen
-  - stärkere Sprung-, Treffer- und Schussanimation
+Neu:
+- In jedem Level mindestens 4 rote Herzen für zusätzliche Leben.
+- Figuren sind standardmäßig halb so groß.
+- Ein blau-schwarzes Power-up macht die Figur groß.
+- Bei einem Treffer verliert eine große Figur zuerst nur die Vergrößerung.
+- Endgegner in Level 3 ist kleiner und hat weniger Lebenspunkte.
+- Nach dem letzten Sieg startet ein Feuerwerk.
