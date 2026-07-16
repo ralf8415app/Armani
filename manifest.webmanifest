@@ -1,11 +1,11 @@
 {
-  "name": "Chanel & Armani – Deluxe Würfel-Abenteuer",
+  "name": "Chanel & Armani – PC & 3D Edition",
   "short_name": "Chanel & Armani",
-  "description": "Vier Level, Tiere, Blumen, Tag und Nacht, Bonusspiele und Endgegner.",
+  "description": "Vier Level mit fliegenden Inseln, Pseudo-3D-Grafik, Bonusspielen und Endgegner.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "orientation": "landscape",
+  "orientation": "any",
   "background_color": "#08101d",
   "theme_color": "#101827",
   "icons": [

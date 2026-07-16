@@ -1,15 +1,15 @@
-# Chanel & Armani – Deluxe PWA
+# Chanel & Armani – PC & 3D Edition
 
-Neu:
-- feinere Hintergründe mit Tag, Nacht, Sonne, Mond und Sternen
-- Blumen, Bäume und dekorative Tiere
-- vier Jump-and-Run-Level mit Gegnern
-- Bonus 1: Knochen-Labyrinth
-- Bonus 2: Tier-Dash, inspiriert von klassischen 2.5D-Plattform-Rennen
-- Bonus 3: Schattenjagd
-- verfeinerter Endgegner mit drei Angriffsphasen
-- Feuerwerk nach dem Endsieg
-- neue manifest.webmanifest und sw.js
-- PWA/Offline-Unterstützung über GitHub Pages
+Korrigiert und erweitert:
+- Absturz nach dem Endgegner behoben.
+- Feuerwerk und Siegesbild werden nur einmal ausgelöst.
+- Endgegner schießt weniger und langsamer.
+- Insgesamt weniger normale Gegner.
+- PC-Steuerung: A/D oder Pfeiltasten, W/↑/Leertaste springen, F/Enter schießen.
+- Querformat ist keine Pflicht mehr.
+- Fliegende Inseln als echte Plattformen in allen vier Leveln.
+- Pseudo-3D-Plattformen mit Seitenflächen, Tiefe, Schatten und Nebel.
+- Manifest auf freie Orientierung umgestellt.
+- Neue Service-Worker-Cache-Version.
 
-Alle Dateien gemeinsam hochladen.
+Hinweis: Es handelt sich um leistungsfähige 2.5D-/Pseudo-3D-Grafik im HTML-Canvas. Echtes frei begehbares 3D würde WebGL/Three.js benötigen und wäre ein anderes Spielsystem.
