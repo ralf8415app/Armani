@@ -1,7 +1,7 @@
 {
-  "name": "Chanel & Armani – Audio 3D Edition",
+  "name": "Chanel & Armani – Final Level V5",
   "short_name": "Chanel & Armani",
-  "description": "Mit Musik, Soundeffekten, Lautstärkereglern, Schwierigkeitsgrad und verbesserter 3D-Grafik.",
+  "description": "Überarbeitetes letztes Level mit animiertem Endgegner, mehr Gegnern und stabiler Siegsequenz.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
