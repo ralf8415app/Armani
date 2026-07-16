@@ -1,9 +1,8 @@
-# Chanel & Armani – Herzen, Power-up und Feuerwerk
+# Chanel & Armani – Endgegner-Änderung
 
-Neu:
-- In jedem Level mindestens 4 rote Herzen für zusätzliche Leben.
-- Figuren sind standardmäßig halb so groß.
-- Ein blau-schwarzes Power-up macht die Figur groß.
-- Bei einem Treffer verliert eine große Figur zuerst nur die Vergrößerung.
-- Endgegner in Level 3 ist kleiner und hat weniger Lebenspunkte.
-- Nach dem letzten Sieg startet ein Feuerwerk.
+Geändert:
+- Level 3 hat keinen Endgegner mehr.
+- Der Endgegner erscheint nur noch in Level 4.
+- Der Endgegner ist ungefähr so groß wie eine große Spielfigur.
+- Der Endgegner hat genau 3 Lebenspunkte.
+- Nach 3 Treffern ist er besiegt.
