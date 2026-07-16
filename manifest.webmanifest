@@ -1,7 +1,7 @@
 {
-  "name": "Chanel & Armani – PC & 3D Edition",
+  "name": "Chanel & Armani – Audio 3D Edition",
   "short_name": "Chanel & Armani",
-  "description": "Vier Level mit fliegenden Inseln, Pseudo-3D-Grafik, Bonusspielen und Endgegner.",
+  "description": "Mit Musik, Soundeffekten, Lautstärkereglern, Schwierigkeitsgrad und verbesserter 3D-Grafik.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

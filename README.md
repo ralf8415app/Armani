@@ -1,15 +1,17 @@
-# Chanel & Armani – PC & 3D Edition
+# Chanel & Armani – Audio 3D Edition
 
-Korrigiert und erweitert:
-- Absturz nach dem Endgegner behoben.
-- Feuerwerk und Siegesbild werden nur einmal ausgelöst.
-- Endgegner schießt weniger und langsamer.
-- Insgesamt weniger normale Gegner.
-- PC-Steuerung: A/D oder Pfeiltasten, W/↑/Leertaste springen, F/Enter schießen.
-- Querformat ist keine Pflicht mehr.
-- Fliegende Inseln als echte Plattformen in allen vier Leveln.
-- Pseudo-3D-Plattformen mit Seitenflächen, Tiefe, Schatten und Nebel.
-- Manifest auf freie Orientierung umgestellt.
-- Neue Service-Worker-Cache-Version.
+Neu:
+- Hintergrundmusik mit Web Audio API
+- Soundeffekte für Sprung, Schuss, Treffer, Sammeln, Power-up, Gegner und Sieg
+- Musik-Lautstärkeregler
+- Effekt-Lautstärkeregler
+- Stumm-Schalter
+- Schwierigkeitsgrad: Leicht, Normal, Schwer
+- Normale Gegner benötigen exakt 3 Treffer
+- Endgegner-Lebensbalken
+- verbesserte Pseudo-3D-Plattformen mit Licht, Schatten, Tiefenflächen und Felsunterseiten
+- PC- und Touch-Steuerung
+- freie Orientierung
+- neue Service-Worker-Version
 
-Hinweis: Es handelt sich um leistungsfähige 2.5D-/Pseudo-3D-Grafik im HTML-Canvas. Echtes frei begehbares 3D würde WebGL/Three.js benötigen und wäre ein anderes Spielsystem.
+Hinweis: Browser starten Audio erst nach der ersten Berührung, einem Klick oder Tastendruck.
