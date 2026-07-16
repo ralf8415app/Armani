@@ -75,6 +75,13 @@ button:active{transform:translateY(3px);box-shadow:0 2px 0 #7d5a12}
   #pacControls button{width:54px;height:54px;font-size:25px}
   #pacSkip{min-width:160px;font-size:12px}
 }
+
+@media (orientation:portrait){
+  body.bonus-active #bonusScreen .card{width:96vw;height:96vh;max-height:none;padding:10px}
+  body.bonus-active #bonusCanvas{width:min(92vw,650px)!important;max-height:72vh;height:auto!important}
+  body.bonus-active #bonusScreen h1{font-size:32px!important}
+  body.bonus-active #bonusScreen h2{font-size:20px}
+}
 </style>
 </head>
 <body>
@@ -425,7 +432,7 @@ function pacStep(){
   if(pacMap[pacPlayer.y][pacPlayer.x]==='.'){pacMap[pacPlayer.y][pacPlayer.x]=' ';pacCollected++;scorePoints+=2;pacPointsEl.textContent=pacCollected;sfx('bone')}
   for(const e of pacEnemies){let opts=[[1,0],[-1,0],[0,1],[0,-1]].filter(d=>pacCanMove(e.x+d[0],e.y+d[1]));opts.sort(()=>Math.random()-.5);const best=opts[0];if(best){e.x+=best[0];e.y+=best[1]}if(e.x===pacPlayer.x&&e.y===pacPlayer.y){pacPlayer={x:1,y:1,dirX:0,dirY:0};sfx('hit')}}
   drawPac();
-  if(pacCollected>=pacDots){clearInterval(pacTimer);pacTimer=null;pacDone=true;scorePoints+=100;sfx('win');setTimeout(()=>{pacScreen.style.display='none';restoreMainControls();hud.style.display='flex';leftPad.style.display='flex';rightPad.style.display='flex';p2LeftPad.style.display=mode==='split'?'flex':'none';p2RightPad.style.display=mode==='split'?'flex':'none';setup(2);run=true;last=performance.now()},700)}
+  if(pacCollected>=pacDots){clearInterval(pacTimer);pacTimer=null;pacDone=true;scorePoints+=100;sfx('win');setTimeout(()=>{document.body.classList.remove('bonus-active');pacScreen.style.display='none';restoreMainControls();hud.style.display='flex';leftPad.style.display='flex';rightPad.style.display='flex';p2LeftPad.style.display=mode==='split'?'flex':'none';p2RightPad.style.display=mode==='split'?'flex':'none';setup(2);run=true;last=performance.now()},700)}
 }
 
 function setMainControlsForPac(){
@@ -451,7 +458,7 @@ function restoreMainControls(){
   if(rightButtons[0]){rightButtons[0].textContent='🦴';rightButtons[0].setAttribute('aria-label','Schießen')}
   if(rightButtons[1]){rightButtons[1].textContent='⬆';rightButtons[1].setAttribute('aria-label','Springen')}
 }
-function startPacBonus(){run=false;hud.style.display='none';leftPad.style.display='none';rightPad.style.display='none';p2LeftPad.style.display='none';p2RightPad.style.display='none';pacScreen.style.display='flex';pacScreen.scrollTop=0;makePacLevel();if(pacTimer)clearInterval(pacTimer);pacTimer=setInterval(pacStep,170)}
+function startPacBonus(){document.body.classList.add('bonus-active');run=false;hud.style.display='none';leftPad.style.display='none';rightPad.style.display='none';p2LeftPad.style.display='none';p2RightPad.style.display='none';pacScreen.style.display='flex';pacScreen.scrollTop=0;makePacLevel();if(pacTimer)clearInterval(pacTimer);pacTimer=setInterval(pacStep,170)}
 
 let lastPacInput=0;
 function setPacDirection(dx,dy){
@@ -490,7 +497,7 @@ pacCanvas.addEventListener('pointerup',e=>{
   else setPacDirection(0,dy>0?1:-1);
 });
 
-pacSkip.onclick=()=>{if(pacTimer)clearInterval(pacTimer);pacTimer=null;pacDone=true;pacScreen.style.display='none';hud.style.display='flex';leftPad.style.display='flex';rightPad.style.display='flex';p2LeftPad.style.display=mode==='split'?'flex':'none';p2RightPad.style.display=mode==='split'?'flex':'none';setup(2);run=true;last=performance.now()};
+pacSkip.onclick=()=>{document.body.classList.remove('bonus-active');if(pacTimer)clearInterval(pacTimer);pacTimer=null;pacDone=true;pacScreen.style.display='none';hud.style.display='flex';leftPad.style.display='flex';rightPad.style.display='flex';p2LeftPad.style.display=mode==='split'?'flex':'none';p2RightPad.style.display=mode==='split'?'flex':'none';setup(2);run=true;last=performance.now()};
 
 let bonusNodes=[],bonusEdges=[],dragNode=null,bonusCrossings=0;
 function lineIntersect(a,b,c,d){
@@ -530,9 +537,9 @@ function bonusPos(e){
 }
 bonusCanvas.addEventListener('pointerdown',e=>{const p=bonusPos(e);dragNode=bonusNodes.findIndex(n=>Math.hypot(n.x-p.x,n.y-p.y)<35);if(dragNode<0)dragNode=null});
 bonusCanvas.addEventListener('pointermove',e=>{if(dragNode===null)return;e.preventDefault();const p=bonusPos(e);bonusNodes[dragNode].x=Math.max(30,Math.min(620,p.x));bonusNodes[dragNode].y=Math.max(30,Math.min(650,p.y));drawBonus()});
-bonusCanvas.addEventListener('pointerup',()=>{if(dragNode===null)return;dragNode=null;const cross=countCrossings();const gained=Math.max(0,Math.min(30,30-cross*3));explorePointsEl.textContent=gained;if(cross===0&&!bonusDone){bonusDone=true;scorePoints+=30;explorePointsEl.textContent=30;sfx('win');setTimeout(()=>{bonusScreen.style.display='none';hud.style.display='flex';leftPad.style.display='flex';rightPad.style.display='flex';p2LeftPad.style.display=mode==='split'?'flex':'none';p2RightPad.style.display=mode==='split'?'flex':'none';setup(4);run=true;last=performance.now()},900)}});
-bonusSkip.onclick=()=>{bonusScreen.style.display='none';hud.style.display='flex';leftPad.style.display='flex';rightPad.style.display='flex';p2LeftPad.style.display=mode==='split'?'flex':'none';p2RightPad.style.display=mode==='split'?'flex':'none';setup(4);run=true;last=performance.now()};
-function startBonusLevel(){if(bonusScreen.style.display==='flex')return;run=false;hud.style.display='none';leftPad.style.display='none';rightPad.style.display='none';p2LeftPad.style.display='none';p2RightPad.style.display='none';bonusScreen.style.display='flex';makeBonus()}
+bonusCanvas.addEventListener('pointerup',()=>{if(dragNode===null)return;dragNode=null;const cross=countCrossings();const gained=Math.max(0,Math.min(30,30-cross*3));explorePointsEl.textContent=gained;if(cross===0&&!bonusDone){bonusDone=true;scorePoints+=30;explorePointsEl.textContent=30;sfx('win');setTimeout(()=>{document.body.classList.remove('bonus-active');bonusScreen.style.display='none';hud.style.display='flex';leftPad.style.display='flex';rightPad.style.display='flex';p2LeftPad.style.display=mode==='split'?'flex':'none';p2RightPad.style.display=mode==='split'?'flex':'none';setup(4);run=true;last=performance.now()},900)}});
+bonusSkip.onclick=()=>{document.body.classList.remove('bonus-active');bonusScreen.style.display='none';hud.style.display='flex';leftPad.style.display='flex';rightPad.style.display='flex';p2LeftPad.style.display=mode==='split'?'flex':'none';p2RightPad.style.display=mode==='split'?'flex':'none';setup(4);run=true;last=performance.now()};
+function startBonusLevel(){if(bonusScreen.style.display==='flex')return;document.body.classList.add('bonus-active');run=false;hud.style.display='none';leftPad.style.display='none';rightPad.style.display='none';p2LeftPad.style.display='none';p2RightPad.style.display='none';bonusScreen.style.display='flex';makeBonus()}
 
 function setup(n){level=n;lastPlayableLevel=n;lvl.textContent='Level '+n+'/4';plats=[];bones=[];hearts=[];powerups=[];blocks=[];enemies=[];shots=[];eshots=[];boss=null;gaps=[];hills=[];particles=[];weatherParticles=[];fireworks=[];celebrating=false;weatherType=['sun','rain','snow'][Math.floor(Math.random()*3)];is3DLevel=n===4;weatherEl.textContent=is3DLevel?'🧊 3D-Welt':weatherType==='sun'?'☀️ Sonne':weatherType==='rain'?'🌧️ Regen':'❄️ Schnee';P.forEach((p,i)=>{p.x=70+i*80;p.y=30;p.done=0;p.big=false;p.w=p.baseW;p.h=p.baseH});
 world=n===1?2600:n===2?3000:n===3?3300:3600;goal=world-130;

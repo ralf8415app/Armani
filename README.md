@@ -1,9 +1,6 @@
-# Chanel & Armani – Pac-Bonus auf einem Bildschirm
+# Chanel & Armani – beide Bonusspiele drehbar
 
-Korrigiert:
-- Das Pac-Bonuslevel passt vollständig auf einen Querformat-Bildschirm.
-- Das Labyrinth wurde kompakter gemacht.
-- Das Steuerkreuz ist dauerhaft rechts neben dem Labyrinth sichtbar.
-- Alle vier Richtungen reagieren sofort auf Touch.
-- Der Button „Weiter zu Level 2“ bleibt sichtbar.
-- Das Bonuslevel ist nicht mehr von den normalen Jump-and-Run-Knöpfen abhängig.
+Geändert:
+- Pac-Man-Bonuslevel funktioniert im Hoch- und Querformat.
+- Das zweite Bonusspiel mit den Seilen funktioniert ebenfalls im Hoch- und Querformat.
+- Nach Verlassen eines Bonusspiels wird das Hauptspiel wieder auf Querformat beschränkt.
