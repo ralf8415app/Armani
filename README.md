@@ -1,7 +1,9 @@
-# Chanel & Armani – Komplettes Würfel-Abenteuer
+# Chanel & Armani – Hügel, Schluchten, Katzen und Mäuse
 
-Neue Touch-Steuerung:
-- Links unten: links / rechts
-- Rechts unten: springen / schießen
+Neu:
+- eigene Retro-Spielmusik und Soundeffekte
+- unterschiedliche Hügel und Schluchten in jedem Level
+- Katzen- und Mäuse-Hindernisse statt Steinblöcken
+- Touch-Steuerung: links unten bewegen, rechts unten springen und schießen
 
-Für GitHub Pages `index.html` hochladen.
+Es wurden keine originalen Mario-Sounds verwendet.
