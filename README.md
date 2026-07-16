@@ -1,9 +1,9 @@
-# Chanel & Armani – Level-4-Fehler behoben
+# Chanel & Armani – Querformat, Pac-Bonus und Zufallswetter
 
-Korrigiert:
-- Level 3 wird jetzt beim Erreichen des Ziels abgeschlossen.
-- Danach startet das Bonuslevel.
-- Nach Abschluss oder Überspringen des Bonuslevels beginnt Level 4.
-- Touch-Steuerung wird nach dem Bonuslevel wieder eingeblendet.
-- In Level 3 gibt es keinen Endgegner.
-- Der einzige Endgegner steht in Level 4 und hat 3 Lebenspunkte.
+- Nur Querformat
+- Kompakter Startbildschirm
+- Von Level 2, 3 und 4 direkt zurück zu Level 1
+- Nach Game Over Neustart im zuletzt gespielten Level
+- Zufälliges Wetter pro Level
+- Pac-Man-ähnliches Bonuslevel nach Level 1
+- Seil-Bonuslevel nach Level 3 bleibt erhalten
