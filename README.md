@@ -1,3 +1,7 @@
-# Chanel & Armani – Würfelspiel
+# Chanel & Armani – Komplettes Würfel-Abenteuer
 
-`index.html` für GitHub Pages hochladen.
+Neue Touch-Steuerung:
+- Links unten: links / rechts
+- Rechts unten: springen / schießen
+
+Für GitHub Pages `index.html` hochladen.
