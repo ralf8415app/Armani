@@ -1,15 +1,23 @@
 {
-  "name": "Chanel & Armani – Das Würfel-Abenteuer",
+  "name": "Chanel & Armani – Deluxe Würfel-Abenteuer",
   "short_name": "Chanel & Armani",
-  "description": "HTML5 Jump-and-Run mit Chanel und Armani",
+  "description": "Vier Level, Tiere, Blumen, Tag und Nacht, Bonusspiele und Endgegner.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "landscape",
-  "background_color": "#09111f",
+  "background_color": "#08101d",
   "theme_color": "#101827",
   "icons": [
-    {"src":"icon-192.png","sizes":"192x192","type":"image/png"},
-    {"src":"icon-512.png","sizes":"512x512","type":"image/png"}
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
   ]
 }

@@ -1,16 +1,15 @@
-# Chanel & Armani – kompletter PWA-Neustart
+# Chanel & Armani – Deluxe PWA
 
-Neue, zusammengehörige Dateien:
-- `index.html`
-- `manifest.webmanifest`
-- `sw.js`
-- `icon-192.png`
-- `icon-512.png`
+Neu:
+- feinere Hintergründe mit Tag, Nacht, Sonne, Mond und Sternen
+- Blumen, Bäume und dekorative Tiere
+- vier Jump-and-Run-Level mit Gegnern
+- Bonus 1: Knochen-Labyrinth
+- Bonus 2: Tier-Dash, inspiriert von klassischen 2.5D-Plattform-Rennen
+- Bonus 3: Schattenjagd
+- verfeinerter Endgegner mit drei Angriffsphasen
+- Feuerwerk nach dem Endsieg
+- neue manifest.webmanifest und sw.js
+- PWA/Offline-Unterstützung über GitHub Pages
 
-## GitHub Pages
-Alle Dateien gemeinsam in das Repository hochladen. Danach GitHub Pages aktivieren.
-
-## Installation auf iPhone/iPad
-Die GitHub-Pages-Adresse in Safari öffnen → Teilen → Zum Home-Bildschirm.
-
-Der Service Worker funktioniert nur über HTTPS bzw. GitHub Pages, nicht beim direkten lokalen Öffnen der HTML-Datei.
+Alle Dateien gemeinsam hochladen.
