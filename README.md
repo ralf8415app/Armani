@@ -1,8 +1,9 @@
-# Chanel & Armani – Pac-Steuerung wie im Hauptspiel
+# Chanel & Armani – Pac-Bonus auf einem Bildschirm
 
-Pac-Bonuslevel:
-- Links unten: links / rechts
-- Rechts unten: runter / hoch
-- Die normalen Spielknöpfe werden während des Pac-Bonuslevels automatisch umbeschriftet.
-- Nach dem Bonuslevel werden Schießen und Springen wiederhergestellt.
-- Tastatur: A/D oder Pfeiltasten links/rechts, W/Pfeil hoch, S/F/Pfeil runter.
+Korrigiert:
+- Das Pac-Bonuslevel passt vollständig auf einen Querformat-Bildschirm.
+- Das Labyrinth wurde kompakter gemacht.
+- Das Steuerkreuz ist dauerhaft rechts neben dem Labyrinth sichtbar.
+- Alle vier Richtungen reagieren sofort auf Touch.
+- Der Button „Weiter zu Level 2“ bleibt sichtbar.
+- Das Bonuslevel ist nicht mehr von den normalen Jump-and-Run-Knöpfen abhängig.

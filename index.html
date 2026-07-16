@@ -52,6 +52,29 @@ button:active{transform:translateY(3px);box-shadow:0 2px 0 #7d5a12}
   #select h2{font-size:23px}
   #select h3{font-size:16px}
 }
+
+.pacCard h1{font-size:clamp(22px,4vw,38px);margin:0 0 2px}
+.pacCard p{font-size:14px;margin:2px 0 6px}
+.pacLayout{display:grid;grid-template-columns:minmax(0,1fr) 210px;gap:12px;align-items:center;height:calc(100% - 88px)}
+.pacBoard{min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.pacScore{font-size:18px;font-weight:900;margin-top:4px}
+.pacSide{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+#pacControls{display:grid!important;grid-template-columns:64px 64px 64px;grid-template-rows:64px 64px 64px;gap:7px;justify-content:center;align-items:center}
+#pacControls button{width:64px;height:64px;padding:0;font-size:30px;border-radius:16px}
+#pacUp{grid-column:2;grid-row:1}
+#pacLeft{grid-column:1;grid-row:2}
+#pacDown{grid-column:2;grid-row:2}
+#pacRight{grid-column:3;grid-row:2}
+#pacSkip{font-size:14px;padding:9px 11px;min-width:180px}
+@media(max-height:540px){
+  .pacCard{height:98vh!important}
+  .pacCard h1{font-size:22px}
+  .pacCard p{display:none}
+  .pacLayout{height:calc(100% - 42px);grid-template-columns:minmax(0,1fr) 180px}
+  #pacControls{grid-template-columns:54px 54px 54px;grid-template-rows:54px 54px 54px}
+  #pacControls button{width:54px;height:54px;font-size:25px}
+  #pacSkip{min-width:160px;font-size:12px}
+}
 </style>
 </head>
 <body>
@@ -106,18 +129,24 @@ window.addEventListener('error',function(e){
 
 
 
-<div id="pacScreen" class="screen" style="display:none;background:#050816"><div class="card" style="background:#0b1022;color:white;width:min(96vw,940px)">
+<div id="pacScreen" class="screen" style="display:none;background:#050816;padding:6px"><div class="card pacCard" style="background:#0b1022;color:white;width:98vw;height:96vh;max-width:none;max-height:none;overflow:hidden;padding:8px 12px">
 <h1 style="text-shadow:none;font-size:38px">BONUSLEVEL – KNOCHEN-LABYRINTH</h1>
 <p>Sammle alle Punkte und weiche den Katzen aus. Steuerung wie im Hauptspiel: links unten links/rechts, rechts unten hoch/runter.</p>
-<canvas id="pacCanvas" width="900" height="500" style="position:static;width:min(94vw,900px);height:auto;background:#050816;border:4px solid #1d4ed8;border-radius:14px;touch-action:none"></canvas>
-<div style="font-size:20px;margin:8px">Punkte: <span id="pacPoints">0</span> / <span id="pacTotal">0</span></div>
-<div id="pacControls" style="display:none">
+<div class="pacLayout">
+  <div class="pacBoard">
+    <canvas id="pacCanvas" width="880" height="440" style="position:static;width:100%;height:auto;background:#050816;border:3px solid #1d4ed8;border-radius:12px;touch-action:none"></canvas>
+    <div class="pacScore">Punkte: <span id="pacPoints">0</span> / <span id="pacTotal">0</span></div>
+  </div>
+  <div class="pacSide">
+    <div id="pacControls">
 <button id="pacUp" aria-label="Nach oben">⬆</button>
 <button id="pacLeft" aria-label="Nach links">⬅</button>
 <button id="pacDown" aria-label="Nach unten">⬇</button>
 <button id="pacRight" aria-label="Nach rechts">➡</button>
 </div>
-<button id="pacSkip">WEITER ZU LEVEL 2</button>
+    <button id="pacSkip">WEITER ZU LEVEL 2</button>
+  </div>
+</div>
 </div></div>
 
 <div id="rankScreen" class="screen" style="display:none"><div class="card">
@@ -363,17 +392,17 @@ let pacMap=[],pacPlayer={x:1,y:1,dirX:0,dirY:0},pacEnemies=[],pacDots=0,pacColle
 const PAC_TILE=40;
 function makePacLevel(){
   const raw=[
-    "######################",
-    "#....................#",
-    "#.####.#####.#######.#",
-    "#.#....#...#.#.....#.#",
-    "#.#.####.#.#.#.###.#.#",
-    "#...#....#...#...#...#",
-    "###.#.#########.#.####",
-    "#...#.....#.....#....#",
-    "#.#######.#.########.#",
-    "#.........#..........#",
-    "######################"
+    "####################",
+    "#..................#",
+    "#.###.####.###.###.#",
+    "#.#...#....#...#...#",
+    "#.#.###.##.#.###.#.#",
+    "#...#......#.....#.#",
+    "###.#.#######.###..#",
+    "#...#.....#........#",
+    "#.#####.#.#.######.#",
+    "#.......#..........#",
+    "####################"
   ];
   pacMap=raw.map(r=>r.split(''));pacPlayer={x:1,y:1,dirX:0,dirY:0};pacEnemies=[{x:20,y:9},{x:10,y:5}];pacCollected=0;pacDots=0;
   for(const row of pacMap)for(const cell of row)if(cell==='.')pacDots++;
@@ -422,7 +451,7 @@ function restoreMainControls(){
   if(rightButtons[0]){rightButtons[0].textContent='🦴';rightButtons[0].setAttribute('aria-label','Schießen')}
   if(rightButtons[1]){rightButtons[1].textContent='⬆';rightButtons[1].setAttribute('aria-label','Springen')}
 }
-function startPacBonus(){run=false;hud.style.display='none';setMainControlsForPac();pacScreen.style.display='flex';makePacLevel();if(pacTimer)clearInterval(pacTimer);pacTimer=setInterval(pacStep,170)}
+function startPacBonus(){run=false;hud.style.display='none';leftPad.style.display='none';rightPad.style.display='none';p2LeftPad.style.display='none';p2RightPad.style.display='none';pacScreen.style.display='flex';pacScreen.scrollTop=0;makePacLevel();if(pacTimer)clearInterval(pacTimer);pacTimer=setInterval(pacStep,170)}
 
 let lastPacInput=0;
 function setPacDirection(dx,dy){
@@ -432,10 +461,11 @@ function setPacDirection(dx,dy){
   if(pacScreen.style.display==='flex')pacStep();
 }
 function bindPacButton(btn,dx,dy){
-  const go=e=>{e.preventDefault();e.stopPropagation();setPacDirection(dx,dy)};
+  const go=e=>{e.preventDefault();e.stopPropagation();btn.classList.add('active');setPacDirection(dx,dy)};
+  const stop=e=>{e.preventDefault();btn.classList.remove('active')};
   btn.addEventListener('pointerdown',go,{passive:false});
   btn.addEventListener('touchstart',go,{passive:false});
-  btn.addEventListener('click',go);
+  btn.addEventListener('click',go);btn.addEventListener('pointerup',stop);btn.addEventListener('pointercancel',stop);btn.addEventListener('touchend',stop,{passive:false});
 }
 bindPacButton(pacUp,0,-1);
 bindPacButton(pacDown,0,1);
