@@ -1,6 +1,7 @@
-# Chanel & Armani – beide Bonusspiele drehbar
+# Chanel & Armani – Bonusspiele automatisch passend
 
-Geändert:
-- Pac-Man-Bonuslevel funktioniert im Hoch- und Querformat.
-- Das zweite Bonusspiel mit den Seilen funktioniert ebenfalls im Hoch- und Querformat.
-- Nach Verlassen eines Bonusspiels wird das Hauptspiel wieder auf Querformat beschränkt.
+Korrigiert:
+- Beide Bonusspiele dürfen weiter gedreht werden.
+- Falls iPhone/iPad die Drehung nicht zulässt, wird die komplette Bonus-Spielfläche automatisch verkleinert.
+- Steuerkreuz, Labyrinth, Seilspiel und Weiter-Buttons bleiben vollständig sichtbar.
+- Die Skalierung wird bei Größenänderung und Drehung neu berechnet.
