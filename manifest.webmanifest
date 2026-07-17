@@ -1,7 +1,7 @@
 {
-  "name": "Chanel & Armani – Einheitssteuerung V15",
+  "name": "Chanel & Armani – Bonus und Boss V16",
   "short_name": "Chanel & Armani",
-  "description": "Offline-Spiel mit identischer Steuerung in Hauptleveln, Bonusspielen und Bosskampf.",
+  "description": "Neu gebaute Bonusspiele und Bosskampf mit eigener, zuverlässig sichtbarer Touch-Steuerung.",
   "start_url": "./index.html?source=pwa",
   "scope": "./",
   "display": "standalone",

@@ -50,6 +50,64 @@
 #bossFight .bossFull{padding:0}
 @media(max-width:700px){#pac .card{border-width:2px}.pacCard p{font-size:11px}.pacStatus{font-size:11px}}
 
+
+/* V16 – komplett neue, eigenständige Steuerung für Bonusspiele und Boss */
+#universalGameControls{
+  position:fixed;inset:0;z-index:50000;display:none;pointer-events:none;
+  touch-action:none;-webkit-user-select:none;user-select:none
+}
+#universalGameControls.active{display:block}
+.ugcGroup{position:absolute;bottom:max(12px,env(safe-area-inset-bottom));display:flex;gap:12px;pointer-events:auto}
+.ugcMove{left:max(12px,env(safe-area-inset-left))}
+.ugcAction{right:max(12px,env(safe-area-inset-right))}
+.ugcButton{
+  width:72px;height:72px;border-radius:50%;border:4px solid #172554;
+  padding:0;font-size:30px;font-weight:900;box-shadow:0 6px 0 #172554;
+  background:rgba(255,255,255,.94);touch-action:none
+}
+.ugcButton:active,.ugcButton.pressed{transform:translateY(5px);box-shadow:0 1px 0 #172554}
+.ugcJump{background:#86efac}.ugcFire{background:#f9a8d4}
+.ugcHint{
+  position:absolute;left:18px;bottom:92px;color:white;background:#000a;
+  border-radius:8px;padding:3px 7px;font-size:11px;font-weight:900;pointer-events:none
+}
+.ugcHintRight{left:auto;right:18px}
+.v16GameScreen{padding:0!important;background:#050816!important;align-items:stretch!important}
+.v16Stage{
+  width:100vw;height:100vh;position:relative;overflow:hidden;background:#050816;
+  display:flex;flex-direction:column;align-items:center;justify-content:center
+}
+.v16Header{
+  position:absolute;left:50%;top:max(6px,env(safe-area-inset-top));transform:translateX(-50%);
+  z-index:6;width:min(92vw,820px);padding:6px 10px;border-radius:12px;
+  background:rgba(3,7,18,.82);color:white;border:2px solid #60a5fa;
+  text-align:center;font-weight:900;font-size:clamp(12px,2.2vw,18px)
+}
+.v16Header h2{margin:0;font-size:clamp(17px,3vw,28px)}
+.v16Header p{margin:2px 0;font-size:clamp(11px,1.8vw,15px)}
+.v16Canvas{
+  display:block;width:100vw!important;height:100vh!important;max-height:none!important;
+  border:0!important;border-radius:0!important;object-fit:contain;background:#050816
+}
+.v16Status{
+  position:absolute;z-index:7;top:max(76px,calc(env(safe-area-inset-top) + 70px));right:10px;
+  background:rgba(255,255,255,.9);color:#111827;border:2px solid #172554;
+  border-radius:10px;padding:5px 9px;font-weight:900
+}
+.v16Skip{
+  position:absolute;z-index:50001;top:max(8px,env(safe-area-inset-top));right:8px;
+  padding:5px 8px;font-size:11px;border-width:2px;box-shadow:none
+}
+#bossFight .bossTop{z-index:8;top:max(7px,env(safe-area-inset-top))}
+#bossCanvas{width:100vw!important;height:100vh!important}
+@media(max-width:700px){
+  .ugcButton{width:62px;height:62px;font-size:25px}
+  .ugcGroup{gap:8px}
+  .ugcHint{bottom:80px;font-size:9px}
+  .v16Header{width:72vw}
+  .v16Header p{display:none}
+}
+
 </style></head><body>
 
 <div id="helpOverlay" class="screen" style="display:none;z-index:10000;background:linear-gradient(180deg,#7dd3fc,#fef3c7);overflow:auto">
@@ -132,6 +190,20 @@ font:700 14px Arial;text-align:center;box-shadow:0 8px 30px rgba(0,0,0,.35)">
   <button id="installAppBtn" style="display:none;margin-left:8px;padding:7px 12px;border-radius:10px;border:0;font-weight:800">INSTALLIEREN</button>
   <button id="closeOfflineBanner" style="margin-left:8px;padding:7px 10px;border-radius:10px;border:0">✕</button>
 </div>
+
+<div id="universalGameControls" aria-label="Spielsteuerung">
+  <div class="ugcGroup ugcMove">
+    <button id="ugcLeft" class="ugcButton" aria-label="Nach links">⬅️</button>
+    <button id="ugcRight" class="ugcButton" aria-label="Nach rechts">➡️</button>
+  </div>
+  <div class="ugcHint">LAUFEN</div>
+  <div class="ugcHint ugcHintRight">SPRINGEN · BALLON</div>
+  <div class="ugcGroup ugcAction">
+    <button id="ugcJump" class="ugcButton ugcJump" aria-label="Springen">⬆️</button>
+    <button id="ugcFire" class="ugcButton ugcFire" aria-label="Luftballon werfen">🎈</button>
+  </div>
+</div>
+
 <div id="rotate" style="display:none"></div><canvas id="game"></canvas>
 
 <button id="settingsBtn">⚙️ SOUND</button>
@@ -151,7 +223,7 @@ font:700 14px Arial;text-align:center;box-shadow:0 8px 30px rgba(0,0,0,.35)">
 
 <div id="hud"><span id="lev">Level 1/4</span><span>⭐<b id="sc">0</b></span><span>❤<b id="li">3</b></span><span>🦴<b id="bo">0</b></span><span id="we">☀️</span><button id="prev">◀ Level</button><button id="one">⏮ Level 1</button></div>
 <div id="move" class="pad"><button class="ctrl" data-k="l">◀</button><button class="ctrl" data-k="r">▶</button></div><div id="act" class="pad"><button class="ctrl fire" data-k="f">🎈</button><button class="ctrl jump" data-k="j">⬆</button></div>
-<div id="menu" class="screen show"><div class="card"><h1>CHANEL & ARMANI</h1><h2>Das neue Würfel-Abenteuer <small style="font-size:.38em">V15 EINHEITSSTEUERUNG</small></h2><p>Offline-Version: einheitliche Steuerung in allen Leveln und Bonusspielen, viele Tiergegner, Kopfsprünge, Luftballons und Feuerwerk. PC: A/D oder Pfeile, W/↑ springen, F/Enter schießen.</p><div class="row"><button data-mode="solo">👤 SOLO</button><button data-mode="coop">👥 2 SPIELER</button><button id="rankOpen">🏆 RANG</button></div></div></div>
+<div id="menu" class="screen show"><div class="card"><h1>CHANEL & ARMANI</h1><h2>Das neue Würfel-Abenteuer <small style="font-size:.38em">V16 BONUS+BOSS NEUBAU</small></h2><p>Offline-Version: einheitliche Steuerung in allen Leveln und Bonusspielen, viele Tiergegner, Kopfsprünge, Luftballons und Feuerwerk. PC: A/D oder Pfeile, W/↑ springen, F/Enter schießen.</p><div class="row"><button data-mode="solo">👤 SOLO</button><button data-mode="coop">👥 2 SPIELER</button><button id="rankOpen">🏆 RANG</button></div></div></div>
 <div id="select" class="screen"><div class="card"><h2>Figur wählen</h2><h3>Spieler 1</h3><div class="row"><button class="char selected" data-p="1" data-c="chanel"><canvas class="preview" width="100" height="78" data-pr="chanel"></canvas>CHANEL</button><button class="char" data-p="1" data-c="armani"><canvas class="preview" width="100" height="78" data-pr="armani"></canvas>ARMANI</button></div><div id="p2" style="display:none"><h3>Spieler 2</h3><div class="row"><button class="char selected" data-p="2" data-c="armani"><canvas class="preview" width="100" height="78" data-pr="armani"></canvas>ARMANI</button><button class="char" data-p="2" data-c="chanel"><canvas class="preview" width="100" height="78" data-pr="chanel"></canvas>CHANEL</button></div></div><button id="start" class="sticky">SPIEL STARTEN</button>
 <button id="openHelpBtn" style="margin-top:8px">❓ Hilfe & Installation</button></div></div>
 <div id="over" class="screen"><div class="card"><h1 style="color:red">LOSER</h1><button id="retry">NEUER VERSUCH IM LETZTEN LEVEL</button><button id="home">HAUPTMENÜ</button></div></div>
@@ -159,17 +231,17 @@ font:700 14px Arial;text-align:center;box-shadow:0 8px 30px rgba(0,0,0,.35)">
 <div id="rank" class="screen"><div class="card"><h1>PUNKT-RANG</h1><div class="row"><input id="name" maxlength="18" placeholder="Name"><button id="save">SPEICHERN</button></div><ol id="list"></ol><button id="back">ZURÜCK</button></div></div>
 
 
-<div id="bossFight" class="screen">
-  <div class="bossFull">
+
+<div id="bossFight" class="screen v16GameScreen">
+  <div class="v16Stage">
     <div class="bossTop">
-      <span>ENDGEGNER</span>
+      <span>👑 ENDGEGNER</span>
       <div class="bossHpOuter"><div id="bossFightHp"></div></div>
       <span id="bossFightInfo">8 / 8</span>
     </div>
-    <canvas id="bossCanvas" width="960" height="540"></canvas>
+    <canvas id="bossCanvas" class="v16Canvas" width="960" height="540"></canvas>
   </div>
 </div>
-
 <div id="firework" class="screen"><div class="card bonusCard">
 <h1>ENDGEGNER BESIEGT!</h1><p>Feuerwerk startet …</p>
 <canvas id="fwCanvas" class="bonusCanvas" width="900" height="440"></canvas>
@@ -182,23 +254,42 @@ font:700 14px Arial;text-align:center;box-shadow:0 8px 30px rgba(0,0,0,.35)">
 <button id="zumbaTap">💃 TANZEN</button>
 </div></div>
 
-<div id="pac" class="screen"><div class="card bonusCard pacCard">
-<h2>BONUS 1 – BUNTER KNOCHEN-GARTEN</h2>
-<p>Wie im Hauptspiel: links laufen, rechts springen und Luftballons werfen. Sammle alle Knochen und besiege Tiere per Kopfsprung.</p>
-<canvas id="pc" class="bonusCanvas" width="960" height="540"></canvas>
-<div class="pacStatus">Knochen <b id="ps">0</b>/<b id="pt">0</b></div>
-<button id="pSkip">WEITER</button>
-</div></div>
 
-<div id="dash" class="screen"><div class="card bonusCard">
-<h2>BONUS 2 – TIER-DASH</h2>
-<p>Wie im Hauptspiel: links laufen, rechts springen und Luftballons werfen. Sammle Früchte und besiege Tiere per Kopfsprung.</p>
-<div class="bonusLayout">
-<div><canvas id="dashCanvas" class="bonusCanvas" width="900" height="440"></canvas><div>Früchte <b id="dashScore">0</b>/20</div></div>
-<div><button id="dashSkip">WEITER</button></div>
-</div></div></div>
+<div id="pac" class="screen v16GameScreen">
+  <div class="v16Stage">
+    <div class="v16Header">
+      <h2>BONUS 1 – KNOCHEN-GARTEN</h2>
+      <p>Links laufen · rechts springen und Luftballons werfen</p>
+    </div>
+    <canvas id="pc" class="bonusCanvas v16Canvas" width="960" height="540"></canvas>
+    <div class="v16Status">🦴 <b id="ps">0</b>/<b id="pt">0</b></div>
+    <button id="pSkip" class="v16Skip">WEITER</button>
+  </div>
+</div>
 
-<div id="shadow" class="screen"><div class="card bonusCard"><h2>BONUS 3 – SCHATTENWALD</h2><p>Wie im Hauptspiel: laufen, springen und Luftballons werfen. Sammle alle Lichter.</p><div class="bonusLayout"><div><canvas id="sh" class="bonusCanvas" width="900" height="440"></canvas><div>Licht <b id="ss">0</b>/30</div></div><div><button id="sSkip">WEITER</button></div></div></div></div>
+<div id="dash" class="screen v16GameScreen">
+  <div class="v16Stage">
+    <div class="v16Header">
+      <h2>BONUS 2 – TIER-DASH</h2>
+      <p>Links laufen · rechts springen und Luftballons werfen</p>
+    </div>
+    <canvas id="dashCanvas" class="bonusCanvas v16Canvas" width="900" height="440"></canvas>
+    <div class="v16Status">🍎 <b id="dashScore">0</b>/20</div>
+    <button id="dashSkip" class="v16Skip">WEITER</button>
+  </div>
+</div>
+
+<div id="shadow" class="screen v16GameScreen">
+  <div class="v16Stage">
+    <div class="v16Header">
+      <h2>BONUS 3 – SCHATTENWALD</h2>
+      <p>Links laufen · rechts springen und Luftballons werfen</p>
+    </div>
+    <canvas id="sh" class="bonusCanvas v16Canvas" width="900" height="440"></canvas>
+    <div class="v16Status">✨ <b id="ss">0</b>/30</div>
+    <button id="sSkip" class="v16Skip">WEITER</button>
+  </div>
+</div>
 <script>
 'use strict';const $=x=>document.getElementById(x),cv=$('game'),c=cv.getContext('2d');let W,H,D=1,last=0,time=0,state='menu',run=false,mode='solo',level=1,lastLevel=1,world=2800,weather='sun',skyMode='day',score=0,bonesN=0,celebrate=0,victoryPending=false,difficulty='normal',bossArena=false,bossIntro=0,gameFinished=false;let choose={1:'chanel',2:'armani'},P=[],plats=[],items=[],en=[],shots=[],esh=[],parts=[],boss=null;const K={l:0,r:0,j:0,f:0},CH={chanel:{sp:300,j:620,d:1},armani:{sp:260,j:575,d:2}},screens=['menu','select','over','win','rank','bossFight','firework','zumba','pac','dash','shadow'];
 function show(id){screens.forEach(s=>$(s).classList.toggle('show',s===id))}function resize(){D=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=W*D;cv.height=H*D;cv.style.width=W+'px';cv.style.height=H+'px';c.setTransform(D,0,0,D,0,0)}addEventListener('resize',resize);resize();
@@ -1084,10 +1175,83 @@ if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.se
     const move=document.getElementById('move');
     const act=document.getElementById('act');
     if(hud) hud.style.display=showHud?'flex':'none';
-    if(move) move.style.display='flex';
-    if(act) act.style.display='flex';
+    if(move) move.style.display=showHud?'flex':'none';
+    if(act) act.style.display=showHud?'flex':'none';
     if(window.K){K.l=K.r=K.j=K.f=0;}
   };
+})();
+</script>
+
+
+<script>
+(function(){
+  const dock=document.getElementById('universalGameControls');
+  const controlledScreens=new Set(['pac','dash','shadow','bossFight']);
+  const buttons={
+    ugcLeft:'l',ugcRight:'r',ugcJump:'j',ugcFire:'f'
+  };
+
+  function resetControls(){
+    if(window.K){K.l=0;K.r=0;K.j=0;K.f=0}
+    Object.keys(buttons).forEach(id=>{
+      const el=document.getElementById(id);
+      if(el)el.classList.remove('pressed');
+    });
+  }
+
+  function setKey(key,value){
+    if(typeof K!=='undefined')K[key]=value;
+  }
+
+  Object.entries(buttons).forEach(([id,key])=>{
+    const el=document.getElementById(id);
+    if(!el)return;
+    const down=e=>{
+      e.preventDefault();e.stopPropagation();
+      try{el.setPointerCapture&&e.pointerId!=null&&el.setPointerCapture(e.pointerId)}catch(_){}
+      setKey(key,1);el.classList.add('pressed');
+    };
+    const up=e=>{
+      e.preventDefault();e.stopPropagation();
+      setKey(key,0);el.classList.remove('pressed');
+    };
+    el.addEventListener('pointerdown',down,{passive:false});
+    el.addEventListener('pointerup',up,{passive:false});
+    el.addEventListener('pointercancel',up,{passive:false});
+    el.addEventListener('pointerleave',e=>{if(e.buttons===0)up(e)},{passive:false});
+    el.addEventListener('contextmenu',e=>e.preventDefault());
+  });
+
+  const originalShow=show;
+  show=function(id){
+    originalShow(id);
+    const active=controlledScreens.has(id);
+    dock.classList.toggle('active',active);
+    if(active){
+      const oldMove=document.getElementById('move');
+      const oldAct=document.getElementById('act');
+      if(oldMove)oldMove.style.display='none';
+      if(oldAct)oldAct.style.display='none';
+    }else{
+      resetControls();
+    }
+  };
+
+  window.addEventListener('blur',resetControls);
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)resetControls()});
+
+  // Bossstart zusätzlich absichern.
+  if(typeof startBossFight==='function'){
+    const oldBossStart=startBossFight;
+    startBossFight=function(){
+      oldBossStart();
+      dock.classList.add('active');
+      const oldMove=document.getElementById('move');
+      const oldAct=document.getElementById('act');
+      if(oldMove)oldMove.style.display='none';
+      if(oldAct)oldAct.style.display='none';
+    };
+  }
 })();
 </script>
 

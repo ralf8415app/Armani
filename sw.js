@@ -1,4 +1,4 @@
-const CACHE='chanel-armani-einheitssteuerung-v15';
+const CACHE='chanel-armani-bonus-boss-v16';
 const APP_SHELL=[
   './',
   './index.html',
