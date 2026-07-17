@@ -1,7 +1,7 @@
 {
-  "name": "Chanel & Armani – Full Boss V10",
+  "name": "Chanel & Armani – Stable V11",
   "short_name": "Chanel & Armani",
-  "description": "Vollbild-Bosskampf mit Kopfsprüngen, Luftballons, Phasen, Feuerwerk und Zumba-Bonus.",
+  "description": "V11 mit einheitlicher Steuerung, stabilem Vollbild-Bosskampf und neuem Knochen-Garten-Bonus.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

@@ -1,17 +1,15 @@
-# Chanel & Armani – Full Boss V10
+# Chanel & Armani – Stable V11
 
-Geändert:
-- eigener Vollbild-Bosskampf
-- kein letztes Loch im Bosskampf
-- Kopfsprung verursacht 2 Schaden
-- bunte Luftballons verursachen 1 Schaden
-- Seitenkontakt kostet nur ein Herz und stößt zurück
-- Boss hat 8 Lebenspunkte und drei Phasen
-- Boss wird nach Treffern langsamer und greift mit größeren Pausen an
-- kompakter, halbtransparenter HUD-Balken
-- Feuerwerk nach Sieg
-- Zumba-Bonusspiel
-- danach automatischer Neustart bei Level 1
-- neue Cache-Version V10
+Direkt für GitHub Pages hochladen.
 
-Nach Upload mit `?v=10` öffnen. Im Menü muss `V10 BOSS` stehen.
+Änderungen:
+- Bosskampf verwendet dieselbe Steuerung wie das Hauptspiel
+- links: vor/zurück; rechts: Luftballon und springen
+- keine doppelte Boss-Steuerung
+- überarbeitetes Bonusspiel 1 als bunter Knochen-Garten
+- alle Knochen sind durch normale Sprünge erreichbar
+- Sprunghöhe und Plattformabstände wurden abgestimmt
+- stabilere Übergänge und vollständiges Zurücksetzen der Eingaben
+- Cache-Version V11
+
+Nach Upload mit `?v=11` öffnen. Im Menü muss `V11 STABIL` stehen.

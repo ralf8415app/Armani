@@ -40,6 +40,16 @@
 #bossJump{background:#86efac}.bossControls #bossFire{background:#f9a8d4}
 @media(max-width:700px){.bossControls{gap:5px}.bossControls button{min-width:58px;height:50px;font-size:12px}.bossTop{font-size:11px}.bossHpOuter{width:42vw}}
 
+
+/* V11: unified controls for normal game, bonus 1 and boss fight */
+#bossFight~#move,#bossFight~#act{z-index:30}
+.pacCard{width:min(98vw,1000px);max-width:1000px;padding:8px 10px 72px}
+.pacCard h2{margin:2px 0}.pacCard p{margin:2px 0 5px}.pacStatus{position:absolute;top:8px;right:12px;background:rgba(255,255,255,.82);padding:4px 9px;border-radius:10px;font-weight:900}
+#pac .bonusCanvas{width:min(96vw,960px);height:auto;max-height:74vh;object-fit:contain}
+#pac #pSkip{position:absolute;right:12px;bottom:8px;font-size:12px;padding:5px 10px}
+#bossFight .bossFull{padding:0}
+@media(max-width:700px){#pac .card{border-width:2px}.pacCard p{font-size:11px}.pacStatus{font-size:11px}}
+
 </style></head><body><div id="rotate" style="display:none"></div><canvas id="game"></canvas>
 
 <button id="settingsBtn">⚙️ SOUND</button>
@@ -58,8 +68,8 @@
 <div id="bossBarWrap"><div id="bossBar"></div></div>
 
 <div id="hud"><span id="lev">Level 1/4</span><span>⭐<b id="sc">0</b></span><span>❤<b id="li">3</b></span><span>🦴<b id="bo">0</b></span><span id="we">☀️</span><button id="prev">◀ Level</button><button id="one">⏮ Level 1</button></div>
-<div id="move" class="pad"><button class="ctrl" data-k="l">◀</button><button class="ctrl" data-k="r">▶</button></div><div id="act" class="pad"><button class="ctrl fire" data-k="f">🦴</button><button class="ctrl jump" data-k="j">⬆</button></div>
-<div id="menu" class="screen show"><div class="card"><h1>CHANEL & ARMANI</h1><h2>Das neue Würfel-Abenteuer <small style="font-size:.38em">V10 BOSS</small></h2><p>Deluxe-Grafik: 4 Level, fliegende Inseln, Tiere, Blumen, Sonne, Mond, Sterne, drei Bonusspiele und Feuerwerk. PC: A/D oder Pfeile, W/↑ springen, F/Enter schießen.</p><div class="row"><button data-mode="solo">👤 SOLO</button><button data-mode="coop">👥 2 SPIELER</button><button id="rankOpen">🏆 RANG</button></div></div></div>
+<div id="move" class="pad"><button class="ctrl" data-k="l">◀</button><button class="ctrl" data-k="r">▶</button></div><div id="act" class="pad"><button class="ctrl fire" data-k="f">🎈</button><button class="ctrl jump" data-k="j">⬆</button></div>
+<div id="menu" class="screen show"><div class="card"><h1>CHANEL & ARMANI</h1><h2>Das neue Würfel-Abenteuer <small style="font-size:.38em">V11 STABIL</small></h2><p>Deluxe-Grafik: 4 Level, fliegende Inseln, Tiere, Blumen, Sonne, Mond, Sterne, drei Bonusspiele und Feuerwerk. PC: A/D oder Pfeile, W/↑ springen, F/Enter schießen.</p><div class="row"><button data-mode="solo">👤 SOLO</button><button data-mode="coop">👥 2 SPIELER</button><button id="rankOpen">🏆 RANG</button></div></div></div>
 <div id="select" class="screen"><div class="card"><h2>Figur wählen</h2><h3>Spieler 1</h3><div class="row"><button class="char selected" data-p="1" data-c="chanel"><canvas class="preview" width="100" height="78" data-pr="chanel"></canvas>CHANEL</button><button class="char" data-p="1" data-c="armani"><canvas class="preview" width="100" height="78" data-pr="armani"></canvas>ARMANI</button></div><div id="p2" style="display:none"><h3>Spieler 2</h3><div class="row"><button class="char selected" data-p="2" data-c="armani"><canvas class="preview" width="100" height="78" data-pr="armani"></canvas>ARMANI</button><button class="char" data-p="2" data-c="chanel"><canvas class="preview" width="100" height="78" data-pr="chanel"></canvas>CHANEL</button></div></div><button id="start" class="sticky">SPIEL STARTEN</button></div></div>
 <div id="over" class="screen"><div class="card"><h1 style="color:red">LOSER</h1><button id="retry">NEUER VERSUCH IM LETZTEN LEVEL</button><button id="home">HAUPTMENÜ</button></div></div>
 <div id="win" class="screen"><div class="card"><h1>GESCHAFFT!</h1><p>Der Schattenfürst ist besiegt. Das war das letzte Level – danach folgt kein weiteres Level.</p><button id="winRank">PUNKTZAHL SPEICHERN</button><button id="again">NOCH EINMAL</button></div></div>
@@ -74,12 +84,6 @@
       <span id="bossFightInfo">8 / 8</span>
     </div>
     <canvas id="bossCanvas" width="960" height="540"></canvas>
-    <div class="bossControls">
-      <button id="bossLeft">◀</button>
-      <button id="bossJump">⬆ SPRINGEN</button>
-      <button id="bossFire">🎈 LUFTBALLON</button>
-      <button id="bossRight">▶</button>
-    </div>
   </div>
 </div>
 
@@ -95,7 +99,13 @@
 <button id="zumbaTap">💃 TANZEN</button>
 </div></div>
 
-<div id="pac" class="screen"><div class="card bonusCard"><h2>BONUS 1 – KNOCHEN-LABYRINTH</h2><div class="bonusLayout"><div><canvas id="pc" class="bonusCanvas" width="800" height="440"></canvas><div>Punkte <b id="ps">0</b>/<b id="pt">0</b></div></div><div><div class="dpad"><button class="up" id="pu">⬆</button><button class="left" id="pl">⬅</button><button class="down" id="pd">⬇</button><button class="right" id="pr">➡</button></div><button id="pSkip">WEITER</button></div></div></div></div>
+<div id="pac" class="screen"><div class="card bonusCard pacCard">
+<h2>BONUS 1 – BUNTER KNOCHEN-GARTEN</h2>
+<p>Laufe mit den linken Tasten. Rechts: springen. Sammle alle Knochen.</p>
+<canvas id="pc" class="bonusCanvas" width="960" height="540"></canvas>
+<div class="pacStatus">Knochen <b id="ps">0</b>/<b id="pt">0</b></div>
+<button id="pSkip">WEITER</button>
+</div></div>
 
 <div id="dash" class="screen"><div class="card bonusCard">
 <h2>BONUS 2 – TIER-DASH</h2>
@@ -220,12 +230,11 @@ function leaveBossArena(){
 
 let bossFightActive=false,bossRAF=0,bossLast=0;
 let BF=null;
-const BKEY={l:0,r:0,j:0,f:0};
 
 function startBossFight(){
   bossFightActive=true;bossArena=false;run=0;state='bossFight';
-  $('hud').style.display='none';$('move').style.display='none';$('act').style.display='none';
-  show('bossFight');
+  $('hud').style.display='none';$('move').style.display='flex';$('act').style.display='flex';
+  K.l=K.r=K.j=K.f=0;show('bossFight');
   BF={
     player:{x:120,y:410,w:48,h:64,vx:0,vy:0,face:1,onGround:1,inv:0,lives:3,fireCd:0,jumpLock:0},
     boss:{x:720,y:380,w:105,h:112,vx:-95,vy:0,hp:8,max:8,flash:0,stun:0,phase:1,attackCd:1.4},
@@ -254,7 +263,7 @@ function bossDamage(amount,kind){
   BF.particles.push({x:b.x+b.w/2,y:b.y+20,life:.5,text:kind==='stomp'?'KOPFTREFFER! -2':'TREFFER! -1'});
   updateBossHud();sfx('hit');
   if(b.hp<=0){
-    BF.ended=true;bossFightActive=false;boss.a=0;score+=1000;sfx('boss');
+    BF.ended=true;bossFightActive=false;K.l=K.r=K.j=K.f=0;boss.a=0;score+=1000;sfx('boss');
     setTimeout(()=>{cancelAnimationFrame(bossRAF);gameFinished=false;startVictorySequence()},500)
   }
 }
@@ -264,8 +273,8 @@ function hurtBossPlayer(){
   p.lives--;p.inv=1.25;p.vy=-330;p.vx=p.x<BF.boss.x?-260:260;
   updateBossHud();sfx('hurt');
   if(p.lives<=0){
-    BF.ended=true;bossFightActive=false;cancelAnimationFrame(bossRAF);
-    gameFinished=false;run=0;state='over';show('over')
+    BF.ended=true;bossFightActive=false;K.l=K.r=K.j=K.f=0;cancelAnimationFrame(bossRAF);
+    gameFinished=false;run=0;state='over';$('move').style.display='none';$('act').style.display='none';show('over')
   }
 }
 
@@ -288,11 +297,11 @@ function updateBossFight(dt){
   p.inv=Math.max(0,p.inv-dt);p.fireCd=Math.max(0,p.fireCd-dt);
   b.flash=Math.max(0,b.flash-dt);b.stun=Math.max(0,b.stun-dt);b.attackCd-=dt;
 
-  p.vx=((BKEY.r?1:0)-(BKEY.l?1:0))*250;
+  p.vx=((K.r?1:0)-(K.l?1:0))*250;
   if(p.vx)p.face=Math.sign(p.vx);
-  if(BKEY.j&&!p.jumpLock&&p.onGround){p.vy=-560;p.onGround=0;p.jumpLock=1;sfx('jump')}
-  if(!BKEY.j)p.jumpLock=0;
-  if(BKEY.f){fireBossBalloon();BKEY.f=0}
+  if(K.j&&!p.jumpLock&&p.onGround){p.vy=-560;p.onGround=0;p.jumpLock=1;sfx('jump')}
+  if(!K.j)p.jumpLock=0;
+  if(K.f){fireBossBalloon();K.f=0}
   p.vy+=1450*dt;p.x+=p.vx*dt;p.y+=p.vy*dt;
   p.x=Math.max(18,Math.min(942-p.w,p.x));
   if(p.y+p.h>=492){p.y=492-p.h;p.vy=0;p.onGround=1}else p.onGround=0;
@@ -358,14 +367,6 @@ function drawBossFight(){
   if(BF.time<2){x.fillStyle='rgba(0,0,0,.45)';x.fillRect(0,0,960,540);x.fillStyle='#fff';x.font='bold 42px Arial';x.textAlign='center';x.fillText('BOSS-KAMPF!',480,250);x.font='22px Arial';x.fillText('Auf den Kopf springen oder Luftballons schießen',480,292)}
 }
 
-function bindBossButton(id,key){
-  const el=$(id);
-  const on=e=>{e.preventDefault();BKEY[key]=1};
-  const off=e=>{e.preventDefault();BKEY[key]=0};
-  ['pointerdown','touchstart'].forEach(ev=>el.addEventListener(ev,on,{passive:false}));
-  ['pointerup','pointercancel','pointerleave','touchend'].forEach(ev=>el.addEventListener(ev,off,{passive:false}))
-}
-bindBossButton('bossLeft','l');bindBossButton('bossRight','r');bindBossButton('bossJump','j');bindBossButton('bossFire','f');
 
 let fwRAF=0,zumbaRAF=0,zumbaScore=0,zumbaEnd=0,zumbaBeat=0;
 
@@ -719,8 +720,69 @@ try{
 ['pointerdown','keydown','touchstart'].forEach(ev=>addEventListener(ev,ensureAudio,{once:true}));
 
 function ranks(){try{return JSON.parse(localStorage.getItem('caRanks')||'[]')}catch(e){return[]}}function render(){let l=$('list');l.innerHTML='';let r=ranks();if(!r.length)l.innerHTML='<li>Noch keine Einträge</li>';r.slice(0,10).forEach((x,i)=>{let q=document.createElement('li');q.textContent=(i+1)+'. '+x.name+' – '+x.score;l.appendChild(q)})}function save(){let n=($('name').value||'Spieler').trim(),r=ranks();r.push({name:n,score});r.sort((a,b)=>b.score-a.score);try{localStorage.setItem('caRanks',JSON.stringify(r.slice(0,10)))}catch(e){}render()}$('rankOpen').onclick=()=>{render();show('rank')};$('back').onclick=()=>show('menu');$('save').onclick=save;$('winRank').onclick=()=>{render();show('rank')};
-/* PAC */
-const pc=$('pc'),px=pc.getContext('2d'),T=40;let map=[],pp={x:1,y:1,dx:0,dy:0},gh=[],got=0,total=0,ptimer=null;function startPac(){run=0;state='pac';document.body.classList.add('bonus');$('hud').style.display=$('move').style.display=$('act').style.display='none';show('pac');let raw=["####################","#..................#","#.###.####.###.###.#","#.#...#....#...#...#","#.#.###.##.#.###.#.#","#...#......#.....#.#","###.#.#######.###..#","#...#.....#........#","#.#####.#.#.######.#","#.......#..........#","####################"];map=raw.map(r=>r.split(''));pp={x:1,y:1,dx:0,dy:0};gh=[{x:18,y:9},{x:10,y:5}];got=0;total=0;map.forEach(r=>r.forEach(v=>{if(v==='.')total++}));$('ps').textContent=0;$('pt').textContent=total;if(ptimer)clearInterval(ptimer);ptimer=setInterval(pstep,170);pdraw()}function can(x,y){return map[y]&&map[y][x]&&map[y][x]!=='#'}function pdir(x,y){pp.dx=x;pp.dy=y;pstep()}function pstep(){let x=pp.x+pp.dx,y=pp.y+pp.dy;if(can(x,y)){pp.x=x;pp.y=y}if(map[pp.y][pp.x]==='.'){map[pp.y][pp.x]=' ';got++;score+=2;$('ps').textContent=got}gh.forEach(g=>{let o=[[1,0],[-1,0],[0,1],[0,-1]].filter(d=>can(g.x+d[0],g.y+d[1]));let d=o[Math.floor(Math.random()*o.length)];if(d){g.x+=d[0];g.y+=d[1]}if(g.x===pp.x&&g.y===pp.y){pp.x=1;pp.y=1}});pdraw();if(got>=total){clearInterval(ptimer);score+=100;leavePac()}}function pdraw(){px.fillStyle='#030711';px.fillRect(0,0,800,440);for(let y=0;y<map.length;y++)for(let x=0;x<map[y].length;x++){let v=map[y][x];if(v==='#'){px.fillStyle='#1d4ed8';px.fillRect(x*T+2,y*T+2,T-4,T-4)}else if(v==='.'){px.fillStyle='#fde68a';px.beginPath();px.arc(x*T+20,y*T+20,4,0,7);px.fill()}}px.fillStyle='#facc15';px.beginPath();px.arc(pp.x*T+20,pp.y*T+20,15,0,7);px.fill();gh.forEach(g=>{px.fillStyle='#ef4444';px.beginPath();px.arc(g.x*T+20,g.y*T+20,15,0,7);px.fill()})}function leavePac(){document.body.classList.remove('bonus');show('');$('hud').style.display='flex';$('move').style.display='flex';$('act').style.display='flex';build(2);state='game';run=1;last=performance.now()}$('pu').onclick=()=>pdir(0,-1);$('pd').onclick=()=>pdir(0,1);$('pl').onclick=()=>pdir(-1,0);$('pr').onclick=()=>pdir(1,0);$('pSkip').onclick=()=>{if(ptimer)clearInterval(ptimer);leavePac()};
+/* BONUS 1 – BUNTER KNOCHEN-GARTEN */
+const pc=$('pc'),px=pc.getContext('2d');
+let pacRAF=0,pacLast=0,pacPlayer=null,pacBones=[],pacPlatforms=[],pacSpark=[],pacDone=false,pacTime=0;
+function startPac(){
+  run=0;state='pac';document.body.classList.add('bonus');show('pac');
+  $('hud').style.display='none';$('move').style.display='flex';$('act').style.display='flex';
+  K.l=K.r=K.j=K.f=0;pacDone=false;pacTime=0;
+  pacPlayer={x:55,y:430,w:42,h:56,vx:0,vy:0,onGround:0,jumpLock:0,face:1};
+  pacPlatforms=[
+    {x:0,y:500,w:960,h:40},
+    {x:115,y:420,w:160,h:18},{x:330,y:360,w:150,h:18},{x:540,y:410,w:155,h:18},
+    {x:740,y:335,w:170,h:18},{x:505,y:255,w:155,h:18},{x:265,y:245,w:155,h:18},
+    {x:55,y:305,w:130,h:18}
+  ];
+  // Every bone is placed on a platform and reachable with the tuned jump height.
+  const pts=[[65,462],[145,382],[230,382],[365,322],[445,322],[575,372],[665,372],[775,297],[875,297],[540,217],[625,217],[300,207],[390,207],[85,267],[155,267]];
+  pacBones=pts.map((a,i)=>({x:a[0],y:a[1],got:0,hue:(i*41)%360,bob:i*.7}));
+  pacSpark=[];$('ps').textContent='0';$('pt').textContent=String(pacBones.length);
+  cancelAnimationFrame(pacRAF);pacLast=performance.now();pacRAF=requestAnimationFrame(pacLoop)
+}
+function pacHit(a,b){return a.x+a.w>b.x&&a.x<b.x+b.w&&a.y+a.h>b.y&&a.y<b.y+b.h}
+function pacLoop(now){
+  if(state!=='pac'||pacDone)return;
+  const dt=Math.min(.032,(now-pacLast)/1000||.016);pacLast=now;pacTime+=dt;
+  updatePacBonus(dt);drawPacBonus();pacRAF=requestAnimationFrame(pacLoop)
+}
+function updatePacBonus(dt){
+  const p=pacPlayer;const oldY=p.y;
+  p.vx=((K.r?1:0)-(K.l?1:0))*285;if(p.vx)p.face=Math.sign(p.vx);
+  if(K.j&&!p.jumpLock&&p.onGround){p.vy=-675;p.onGround=0;p.jumpLock=1;sfx('jump')}
+  if(!K.j)p.jumpLock=0;
+  // Fire is intentionally harmless here, but cleared to prevent queued actions later.
+  if(K.f)K.f=0;
+  p.vy+=1650*dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.x=Math.max(4,Math.min(956-p.w,p.x));p.onGround=0;
+  for(const q of pacPlatforms){
+    const oldBottom=oldY+p.h,newBottom=p.y+p.h;
+    if(p.vy>=0&&p.x+p.w>q.x+5&&p.x<q.x+q.w-5&&oldBottom<=q.y+8&&newBottom>=q.y){p.y=q.y-p.h;p.vy=0;p.onGround=1}
+  }
+  if(p.y>565){p.x=55;p.y=430;p.vx=0;p.vy=0}
+  for(const b of pacBones){
+    if(!b.got&&pacHit(p,{x:b.x-10,y:b.y-18,w:28,h:30})){b.got=1;score+=5;sfx('coin');
+      for(let i=0;i<10;i++)pacSpark.push({x:b.x,y:b.y,vx:(Math.random()-.5)*180,vy:-50-Math.random()*150,life:.55,h:b.hue})
+    }
+  }
+  pacSpark.forEach(q=>{q.x+=q.vx*dt;q.y+=q.vy*dt;q.vy+=350*dt;q.life-=dt});pacSpark=pacSpark.filter(q=>q.life>0);
+  const got=pacBones.filter(b=>b.got).length;$('ps').textContent=String(got);
+  if(got===pacBones.length&&!pacDone){pacDone=true;score+=200;K.l=K.r=K.j=K.f=0;setTimeout(leavePac,700)}
+}
+function drawPacBonus(){
+  const p=pacPlayer,t=pacTime;let g=px.createLinearGradient(0,0,0,540);g.addColorStop(0,'#65c7ff');g.addColorStop(.58,'#d8f6ff');g.addColorStop(1,'#95d56f');px.fillStyle=g;px.fillRect(0,0,960,540);
+  px.fillStyle='rgba(255,255,255,.75)';for(let i=0;i<7;i++){let x=(i*170+t*18)%1120-100,y=65+(i%3)*55;px.beginPath();px.arc(x,y,28,0,7);px.arc(x+30,y-8,35,0,7);px.arc(x+68,y,26,0,7);px.fill()}
+  for(let i=0;i<16;i++){let x=i*67+18;px.fillStyle='hsl('+(i*33)+',75%,55%)';px.beginPath();px.arc(x,482,7,0,7);px.fill();px.strokeStyle='#166534';px.beginPath();px.moveTo(x,489);px.lineTo(x,500);px.stroke()}
+  pacPlatforms.forEach((q,i)=>{px.fillStyle=i===0?'#4f8f3a':'#8b5a2b';rr(px,q.x,q.y,q.w,q.h,8);px.fill();px.fillStyle='#68c34f';px.fillRect(q.x,q.y,q.w,7)});
+  pacBones.forEach(b=>{if(b.got)return;const y=b.y+Math.sin(t*4+b.bob)*4;px.save();px.translate(b.x,y);px.rotate(Math.sin(t*2+b.bob)*.12);px.fillStyle='#fff7d6';px.strokeStyle='hsl('+b.hue+',80%,45%)';px.lineWidth=3;px.beginPath();px.arc(-9,0,7,0,7);px.arc(9,0,7,0,7);px.fillRect(-9,-5,18,10);px.fill();px.stroke();px.restore()});
+  pacSpark.forEach(q=>{px.fillStyle='hsla('+q.h+',90%,55%,'+Math.max(0,q.life*2)+')';px.fillRect(q.x,q.y,5,5)});
+  dog(px,p.x,p.y,choose[1]||'black',.66,p.face,p.onGround?'run':'jump',Math.floor(t*10)%4);
+  if(pacDone){px.fillStyle='rgba(0,0,0,.35)';px.fillRect(0,0,960,540);px.fillStyle='#fff';px.font='bold 44px Arial';px.textAlign='center';px.fillText('ALLE KNOCHEN GESAMMELT!',480,270)}
+}
+function leavePac(){
+  cancelAnimationFrame(pacRAF);pacDone=true;K.l=K.r=K.j=K.f=0;document.body.classList.remove('bonus');show('');
+  $('hud').style.display='flex';$('move').style.display='flex';$('act').style.display='flex';build(2);state='game';run=1;last=performance.now()
+}
+$('pSkip').onclick=leavePac;
 
 /* TIER-DASH BONUS */
 const dash=$('dashCanvas'),dc=dash.getContext('2d');let runner={x:100,y:330,vx:0,vy:0,g:1},dashWorld=2600,dashCam=0,fruit=[],rocks=[],dashGot=0,dashTimer=null,dashKeys={l:0,r:0,j:0};
