@@ -1,11 +1,11 @@
 {
-  "name": "Chanel & Armani – Stable V11",
+  "name": "Chanel & Armani – Kinderhilfe V14",
   "short_name": "Chanel & Armani",
-  "description": "V11 mit einheitlicher Steuerung, stabilem Vollbild-Bosskampf und neuem Knochen-Garten-Bonus.",
-  "start_url": "./index.html",
+  "description": "Offline-Spiel mit kindgerechter Anleitung und Installationshilfe für iPhone, iPad, Android und Windows.",
+  "start_url": "./index.html?source=pwa",
   "scope": "./",
   "display": "standalone",
-  "orientation": "any",
+  "orientation": "landscape",
   "background_color": "#08101d",
   "theme_color": "#101827",
   "icons": [
@@ -19,5 +19,14 @@
       "sizes": "512x512",
       "type": "image/png"
     }
+  ],
+  "display_override": [
+    "fullscreen",
+    "standalone",
+    "minimal-ui"
+  ],
+  "categories": [
+    "games",
+    "entertainment"
   ]
 }

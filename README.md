@@ -1,15 +1,17 @@
-# Chanel & Armani – Stable V11
+# Chanel & Armani – V12 ACTION
 
-Direkt für GitHub Pages hochladen.
+Direkt für GitHub Pages.
 
-Änderungen:
-- Bosskampf verwendet dieselbe Steuerung wie das Hauptspiel
-- links: vor/zurück; rechts: Luftballon und springen
-- keine doppelte Boss-Steuerung
-- überarbeitetes Bonusspiel 1 als bunter Knochen-Garten
-- alle Knochen sind durch normale Sprünge erreichbar
-- Sprunghöhe und Plattformabstände wurden abgestimmt
-- stabilere Übergänge und vollständiges Zurücksetzen der Eingaben
-- Cache-Version V11
+Neu:
+- gleiche Touch-Steuerung in allen Haupt- und Bonusleveln
+- links: vor/zurück
+- rechts: Luftballon und springen
+- deutlich mehr Gegner
+- Tiere: Hase, Katze, Fuchs, Waschbär, Igel, Wolf, Eule, Fledermaus, Wildschwein und Maus
+- alle normalen Gegner können mit einem Kopfsprung besiegt werden
+- Gegner können zusätzlich mit Luftballons besiegt werden
+- Tiergegner auch in allen Bonusspielen
+- Bosskampf, Feuerwerk, Zumba und automatischer Neustart bleiben erhalten
+- neuer Service-Worker-Cache V12
 
-Nach Upload mit `?v=11` öffnen. Im Menü muss `V11 STABIL` stehen.
+Nach Upload mit `?v=12` öffnen. Im Menü muss `V12 ACTION` stehen.
