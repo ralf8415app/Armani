@@ -75,12 +75,12 @@
       <div style="padding:12px;border:3px solid #8b5cf6;border-radius:18px;background:#f5f3ff">
         <h2 style="margin:0 0 8px">⭐ Bonusspiele</h2>
         <p style="font-size:20px;margin:6px 0">Sammle Knochen, Sterne und Früchte.</p>
-        <p style="font-size:20px;margin:6px 0">Die Steuerung ist immer gleich.</p>
+        <p style="font-size:20px;margin:6px 0">Die Steuerung ist immer gleich: links laufen, rechts springen und Luftballons werfen.</p>
       </div>
 
       <div style="padding:12px;border:3px solid #ef4444;border-radius:18px;background:#fef2f2">
         <h2 style="margin:0 0 8px">👑 Bosskampf</h2>
-        <p style="font-size:20px;margin:6px 0">Springe auf den Kopf des Bosses.</p>
+        <p style="font-size:20px;margin:6px 0">Benutze auch beim Boss dieselben Tasten. Springe auf seinen Kopf.</p>
         <p style="font-size:20px;margin:6px 0">Oder triff ihn mit Luftballons.</p>
         <p style="font-size:20px;margin:6px 0">Weiche seinen Angriffen aus.</p>
       </div>
@@ -151,7 +151,7 @@ font:700 14px Arial;text-align:center;box-shadow:0 8px 30px rgba(0,0,0,.35)">
 
 <div id="hud"><span id="lev">Level 1/4</span><span>⭐<b id="sc">0</b></span><span>❤<b id="li">3</b></span><span>🦴<b id="bo">0</b></span><span id="we">☀️</span><button id="prev">◀ Level</button><button id="one">⏮ Level 1</button></div>
 <div id="move" class="pad"><button class="ctrl" data-k="l">◀</button><button class="ctrl" data-k="r">▶</button></div><div id="act" class="pad"><button class="ctrl fire" data-k="f">🎈</button><button class="ctrl jump" data-k="j">⬆</button></div>
-<div id="menu" class="screen show"><div class="card"><h1>CHANEL & ARMANI</h1><h2>Das neue Würfel-Abenteuer <small style="font-size:.38em">V14 KINDERHILFE</small></h2><p>Offline-Version: einheitliche Steuerung in allen Leveln und Bonusspielen, viele Tiergegner, Kopfsprünge, Luftballons und Feuerwerk. PC: A/D oder Pfeile, W/↑ springen, F/Enter schießen.</p><div class="row"><button data-mode="solo">👤 SOLO</button><button data-mode="coop">👥 2 SPIELER</button><button id="rankOpen">🏆 RANG</button></div></div></div>
+<div id="menu" class="screen show"><div class="card"><h1>CHANEL & ARMANI</h1><h2>Das neue Würfel-Abenteuer <small style="font-size:.38em">V15 EINHEITSSTEUERUNG</small></h2><p>Offline-Version: einheitliche Steuerung in allen Leveln und Bonusspielen, viele Tiergegner, Kopfsprünge, Luftballons und Feuerwerk. PC: A/D oder Pfeile, W/↑ springen, F/Enter schießen.</p><div class="row"><button data-mode="solo">👤 SOLO</button><button data-mode="coop">👥 2 SPIELER</button><button id="rankOpen">🏆 RANG</button></div></div></div>
 <div id="select" class="screen"><div class="card"><h2>Figur wählen</h2><h3>Spieler 1</h3><div class="row"><button class="char selected" data-p="1" data-c="chanel"><canvas class="preview" width="100" height="78" data-pr="chanel"></canvas>CHANEL</button><button class="char" data-p="1" data-c="armani"><canvas class="preview" width="100" height="78" data-pr="armani"></canvas>ARMANI</button></div><div id="p2" style="display:none"><h3>Spieler 2</h3><div class="row"><button class="char selected" data-p="2" data-c="armani"><canvas class="preview" width="100" height="78" data-pr="armani"></canvas>ARMANI</button><button class="char" data-p="2" data-c="chanel"><canvas class="preview" width="100" height="78" data-pr="chanel"></canvas>CHANEL</button></div></div><button id="start" class="sticky">SPIEL STARTEN</button>
 <button id="openHelpBtn" style="margin-top:8px">❓ Hilfe & Installation</button></div></div>
 <div id="over" class="screen"><div class="card"><h1 style="color:red">LOSER</h1><button id="retry">NEUER VERSUCH IM LETZTEN LEVEL</button><button id="home">HAUPTMENÜ</button></div></div>
@@ -291,7 +291,7 @@ enemy(1370,H-144,'hedgehog');enemy(1610,H-144,'wolf');enemy(1880,H-260,'bat');en
 enemy(2410,H-144,'shadow');enemy(2660,H-250,'owl');enemy(2870,H-144,'cat');enemy(3070,H-144,'mouse');
 boss={x:3470,y:H-190,w:88,h:96,hp:difficulty==='easy'?9:difficulty==='hard'?18:12,max:difficulty==='easy'?9:difficulty==='hard'?18:12,a:1,cd:1.2,phase:1,anim:0,dir:-1,vy:0,stun:0,summonCd:4.5,flash:0,lastHit:0}
 }let diffMul=difficulty==='easy'?.8:difficulty==='hard'?1.25:1;en.forEach(e=>e.vx*=diffMul);P.forEach((p,i)=>{p.x=70+i*70;p.y=20;p.vx=p.vy=0;p.done=0;p.big=0;p.w=38;p.h=42});$('lev').textContent='Level '+n+'/4';$('we').textContent=weather==='sun'?'☀️':weather==='rain'?'🌧️':'❄️';hud()}
-function start(){gameFinished=false;ensureAudio();show('');$('hud').style.display='flex';$('move').style.display='flex';$('act').style.display='flex';score=0;bonesN=0;P=[mkP(1,choose[1],70)];if(mode==='coop')P.push(mkP(2,choose[2],140));build(1);state='game';run=1;last=performance.now()}
+function start(){gameFinished=false;ensureAudio();show('');useMainGameControls(true);score=0;bonesN=0;P=[mkP(1,choose[1],70)];if(mode==='coop')P.push(mkP(2,choose[2],140));build(1);state='game';run=1;last=performance.now()}
 function hud(){
       $('sc').textContent=score;$('bo').textContent=bonesN;$('li').textContent=Math.max(...P.map(p=>p.lives));
       const visible=level===4&&boss&&boss.a&&state==='game';
@@ -473,7 +473,7 @@ function startVictorySequence(){
   gameFinished=true;run=0;state='firework';bossArena=false;
   shots=[];esh=[];en.forEach(e=>e.a=0);
   $('bossBarWrap').style.display='none';
-  $('hud').style.display='none';$('move').style.display='none';$('act').style.display='none';
+  useMainGameControls(false);
   show('firework');sfx('win');runFireworks()
 }
 
@@ -502,7 +502,7 @@ function runFireworks(){
 }
 
 function startZumbaBonus(){
-  state='zumba';show('zumba');zumbaScore=0;zumbaBeat=0;zumbaEnd=performance.now()+12000;
+  state='zumba';useMainGameControls(false);show('zumba');zumbaScore=0;zumbaBeat=0;zumbaEnd=performance.now()+12000;
   $('zumbaScore').textContent='0';$('zumbaTime').textContent='12';
   const q=$('zumbaCanvas'),x=q.getContext('2d');
   cancelAnimationFrame(zumbaRAF);
@@ -535,7 +535,7 @@ function zumbaTap(){
 function restartAfterBonus(){
   cancelAnimationFrame(zumbaRAF);
   score+=zumbaScore;gameFinished=false;state='game';run=1;
-  $('hud').style.display='flex';$('move').style.display='flex';$('act').style.display='flex';
+  useMainGameControls(true);
   P.forEach(p=>{p.lives=Math.max(3,p.lives)});
   build(1);show('');last=performance.now();toast('NEUE RUNDE – LEVEL 1')
 }
@@ -810,7 +810,7 @@ function loop(t){
   }
   requestAnimationFrame(loop)
 }requestAnimationFrame(loop);
-document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{mode=b.dataset.mode;$('p2').style.display=mode==='coop'?'block':'none';show('select')});document.querySelectorAll('.char').forEach(b=>b.onclick=()=>{let p=b.dataset.p;choose[p]=b.dataset.c;document.querySelectorAll('.char[data-p="'+p+'"]').forEach(x=>x.classList.remove('selected'));b.classList.add('selected')});$('start').onclick=start;$('retry').onclick=()=>{gameFinished=false;show('');$('hud').style.display='flex';$('move').style.display='flex';$('act').style.display='flex';P=[mkP(1,choose[1],70)];if(mode==='coop')P.push(mkP(2,choose[2],140));build(lastLevel);state='game';run=1;last=performance.now()};$('home').onclick=()=>{run=0;state='menu';show('menu')};$('again').onclick=()=>{gameFinished=false;state='menu';show('menu')};$('zumbaTap').onclick=zumbaTap;$('prev').onclick=()=>{if(state==='game'&&level>1)build(level-1)};$('one').onclick=()=>{if(state==='game'&&level>1)build(1)};
+document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{mode=b.dataset.mode;$('p2').style.display=mode==='coop'?'block':'none';show('select')});document.querySelectorAll('.char').forEach(b=>b.onclick=()=>{let p=b.dataset.p;choose[p]=b.dataset.c;document.querySelectorAll('.char[data-p="'+p+'"]').forEach(x=>x.classList.remove('selected'));b.classList.add('selected')});$('start').onclick=start;$('retry').onclick=()=>{gameFinished=false;show('');useMainGameControls(true);P=[mkP(1,choose[1],70)];if(mode==='coop')P.push(mkP(2,choose[2],140));build(lastLevel);state='game';run=1;last=performance.now()};$('home').onclick=()=>{run=0;state='menu';show('menu')};$('again').onclick=()=>{gameFinished=false;state='menu';show('menu')};$('zumbaTap').onclick=zumbaTap;$('prev').onclick=()=>{if(state==='game'&&level>1)build(level-1)};$('one').onclick=()=>{if(state==='game'&&level>1)build(1)};
 
 addEventListener('keydown',e=>{
   const m={a:'l',A:'l',d:'r',D:'r',w:'j',W:'j',f:'f',F:'f',ArrowLeft:'l',ArrowRight:'r',ArrowUp:'j',Enter:'f',' ':'j'};
@@ -837,7 +837,7 @@ function ranks(){try{return JSON.parse(localStorage.getItem('caRanks')||'[]')}ca
 const pc=$('pc'),px=pc.getContext('2d');
 let pacRAF=0,pacLast=0,pacPlayer=null,pacBones=[],pacPlatforms=[],pacSpark=[],pacEnemies=[],pacShots=[],pacDone=false,pacTime=0;
 function startPac(){
-  run=0;state='pac';document.body.classList.add('bonus');show('pac');
+  run=0;state='pac';document.body.classList.add('bonus');useMainGameControls(false);show('pac');
   $('hud').style.display='none';$('move').style.display='flex';$('act').style.display='flex';
   K.l=K.r=K.j=K.f=0;pacDone=false;pacTime=0;
   pacPlayer={x:55,y:430,w:42,h:56,vx:0,vy:0,onGround:0,jumpLock:0,face:1};
@@ -909,13 +909,13 @@ function drawPacBonus(){
 }
 function leavePac(){
   cancelAnimationFrame(pacRAF);pacDone=true;K.l=K.r=K.j=K.f=0;document.body.classList.remove('bonus');show('');
-  $('hud').style.display='flex';$('move').style.display='flex';$('act').style.display='flex';build(2);state='game';run=1;last=performance.now()
+  useMainGameControls(true);build(2);state='game';run=1;last=performance.now()
 }
 $('pSkip').onclick=leavePac;
 
 /* TIER-DASH BONUS */
 const dash=$('dashCanvas'),dc=dash.getContext('2d');let runner={x:100,y:330,vx:0,vy:0,g:1,fireCd:0},dashWorld=2600,dashCam=0,fruit=[],rocks=[],dashEnemies=[],dashShots=[],dashGot=0,dashTimer=null;
-function startDash(){run=0;state='dash';document.body.classList.add('bonus');$('hud').style.display='none';$('move').style.display='flex';$('act').style.display='flex';K.l=K.r=K.j=K.f=0;show('dash');runner={x:100,y:330,vx:0,vy:0,g:1};dashCam=0;dashGot=0;$('dashScore').textContent=0;fruit=[];rocks=[];dashShots=[];for(let i=0;i<20;i++)fruit.push({x:180+i*115,y:250-(i%3)*55,a:1});for(let i=0;i<12;i++)rocks.push({x:360+i*185,y:350,w:34+(i%3)*8,h:30+(i%2)*15});
+function startDash(){run=0;state='dash';document.body.classList.add('bonus');$('hud').style.display='none';$('move').style.display='flex';$('act').style.display='flex';K.l=K.r=K.j=K.f=0;useMainGameControls(false);show('dash');runner={x:100,y:330,vx:0,vy:0,g:1};dashCam=0;dashGot=0;$('dashScore').textContent=0;fruit=[];rocks=[];dashShots=[];for(let i=0;i<20;i++)fruit.push({x:180+i*115,y:250-(i%3)*55,a:1});for(let i=0;i<12;i++)rocks.push({x:360+i*185,y:350,w:34+(i%3)*8,h:30+(i%2)*15});
 dashEnemies=[{x:520,y:326,w:46,h:46,t:'rabbit',vx:65,a:1},{x:910,y:330,w:54,h:42,t:'fox',vx:-90,a:1},{x:1320,y:334,w:44,h:38,t:'hedgehog',vx:75,a:1},{x:1710,y:330,w:58,h:46,t:'wolf',vx:-95,a:1},{x:2130,y:330,w:60,h:46,t:'boar',vx:70,a:1}];if(dashTimer)clearInterval(dashTimer);dashTimer=setInterval(dashStep,16)}
 function dashStep(){
   const dt=.016;runner.vx=((K.r?1:0)-(K.l?1:0))*320;
@@ -941,14 +941,14 @@ function drawDash(){let g=dc.createLinearGradient(0,0,0,440);g.addColorStop(0,'#
 dashEnemies.forEach(e=>{if(!e.a)return;let x=e.x-dashCam;dc.fillStyle=e.t==='rabbit'?'#f8fafc':e.t==='fox'?'#f97316':e.t==='hedgehog'?'#a16207':e.t==='wolf'?'#64748b':'#92400e';rr(dc,x,e.y,e.w,e.h,10);dc.fill();dc.fillStyle='#fff';dc.beginPath();dc.arc(x+14,e.y+14,5,0,7);dc.arc(x+e.w-14,e.y+14,5,0,7);dc.fill()});
 dashShots.forEach(s=>{dc.fillStyle='hsl('+s.hue+',90%,60%)';dc.beginPath();dc.ellipse(s.x-dashCam+9,s.y+10,8,10,0,0,7);dc.fill()});
 dog(dc,runner.x-dashCam,runner.y-8,choose[1],.62,1,Math.abs(runner.vx)>0?'run':'idle',Math.floor(time*10)%4);dc.fillStyle='#22c55e';dc.fillRect(dashWorld-70-dashCam,245,8,115)}
-function leaveDash(){K.l=K.r=K.j=K.f=0;document.body.classList.remove('bonus');show('');$('hud').style.display='flex';$('move').style.display='flex';$('act').style.display='flex';build(3);state='game';run=1;last=performance.now()}
+function leaveDash(){K.l=K.r=K.j=K.f=0;document.body.classList.remove('bonus');show('');useMainGameControls(true);build(3);state='game';run=1;last=performance.now()}
 $('dashSkip').onclick=()=>{if(dashTimer)clearInterval(dashTimer);leaveDash()};
 
 /* SHADOW – EINHEITLICHE HAUPTSTEUERUNG */
 const sh=$('sh'),sx=sh.getContext('2d');
 let sp={x:60,y:340,vx:0,vy:0,g:1,fireCd:0},lights=[],evil=[],shadowShots=[],sg=0,st=null;
 function startShadow(){
-  run=0;state='shadow';document.body.classList.add('bonus');$('hud').style.display='none';$('move').style.display='flex';$('act').style.display='flex';K.l=K.r=K.j=K.f=0;show('shadow');
+  run=0;state='shadow';document.body.classList.add('bonus');$('hud').style.display='none';$('move').style.display='flex';$('act').style.display='flex';K.l=K.r=K.j=K.f=0;useMainGameControls(false);show('shadow');
   sp={x:60,y:340,vx:0,vy:0,g:1,fireCd:0};sg=0;$('ss').textContent=0;shadowShots=[];
   lights=[];for(let i=0;i<30;i++)lights.push({x:45+(i%10)*88,y:[350,270,190][i%3],a:1});
   evil=[
@@ -985,7 +985,7 @@ function sdraw(){
   shadowShots.forEach(s=>{sx.fillStyle='hsl('+s.hue+',90%,62%)';sx.beginPath();sx.ellipse(s.x+9,s.y+10,8,10,0,0,7);sx.fill()});
   dog(sx,sp.x,sp.y,choose[1]||'chanel',.62,sp.vx<0?-1:1,sp.g?'run':'jump',Math.floor(Date.now()/100)%4)
 }
-function leaveShadow(){if(st)clearInterval(st);K.l=K.r=K.j=K.f=0;document.body.classList.remove('bonus');show('');$('hud').style.display='flex';$('move').style.display='flex';$('act').style.display='flex';build(4);state='game';run=1;last=performance.now()}
+function leaveShadow(){if(st)clearInterval(st);K.l=K.r=K.j=K.f=0;document.body.classList.remove('bonus');show('');useMainGameControls(true);build(4);state='game';run=1;last=performance.now()}
 $('sSkip').onclick=leaveShadow;
 
 if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));}
@@ -1073,6 +1073,21 @@ if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.se
   }catch(_){
     setTimeout(openHelp,350);
   }
+})();
+</script>
+
+
+<script>
+(function(){
+  window.useMainGameControls = function(showHud){
+    const hud=document.getElementById('hud');
+    const move=document.getElementById('move');
+    const act=document.getElementById('act');
+    if(hud) hud.style.display=showHud?'flex':'none';
+    if(move) move.style.display='flex';
+    if(act) act.style.display='flex';
+    if(window.K){K.l=K.r=K.j=K.f=0;}
+  };
 })();
 </script>
 

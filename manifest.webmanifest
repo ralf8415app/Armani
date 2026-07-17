@@ -1,7 +1,7 @@
 {
-  "name": "Chanel & Armani – Kinderhilfe V14",
+  "name": "Chanel & Armani – Einheitssteuerung V15",
   "short_name": "Chanel & Armani",
-  "description": "Offline-Spiel mit kindgerechter Anleitung und Installationshilfe für iPhone, iPad, Android und Windows.",
+  "description": "Offline-Spiel mit identischer Steuerung in Hauptleveln, Bonusspielen und Bosskampf.",
   "start_url": "./index.html?source=pwa",
   "scope": "./",
   "display": "standalone",
