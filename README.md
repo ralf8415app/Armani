@@ -1,1 +1,1 @@
-V8: Hasen, Katzen, 3D-Würfelgegner, echte Knochen, schönere Herzen, buntere 3D-Dekoration und stabiler Endabschluss aus V7.
+V9 TEST: Boss-Arena startet hinter dem letzten Loch, sicherer Boden, zuverlässige Boss-Treffer, Feuerwerk, Zumba-Bonus und automatischer Neustart bei Level 1.
