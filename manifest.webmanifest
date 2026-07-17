@@ -1,7 +1,7 @@
 {
-  "name": "Chanel & Armani – Final Level V5",
+  "name": "Chanel & Armani – Apple Stable V6",
   "short_name": "Chanel & Armani",
-  "description": "Überarbeitetes letztes Level mit animiertem Endgegner, mehr Gegnern und stabiler Siegsequenz.",
+  "description": "Apple-optimierte Version mit separater Boss-Arena und begrenzten Effekten.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
